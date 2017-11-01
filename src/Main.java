@@ -1,8 +1,19 @@
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
-        Lexer lexer = new Lexer("3+4");
-        System.out.println(lexer.expression());
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.print("$ ");
+            String input = scanner.next();
+
+            if (input.equalsIgnoreCase("exit")) {
+                break;
+            }
+
+            System.out.println(new Lexer(input).expression());
+        }
     }
 
 }
