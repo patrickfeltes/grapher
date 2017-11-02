@@ -4,6 +4,7 @@
 public class Lexer {
 
     private static final char EMPTY_CHAR = '\u0000';
+    private static final char SPACE = ' ';
     private String string;
     private int currentPosition;
     private Token currentToken;
@@ -21,6 +22,10 @@ public class Lexer {
      */
     public Token getNextToken() {
         while (currentChar != EMPTY_CHAR) {
+            if (currentChar == SPACE) {
+                skipWhitespace();
+            }
+
             if (currentChar == Reserved.PLUS) {
                 advance();
                 return new Token(TokenType.PLUS, Reserved.PLUS);
@@ -64,9 +69,18 @@ public class Lexer {
     public void advance() {
         currentPosition++;
         if (currentPosition >= string.length()) {
-            currentChar = '\u0000';
+            currentChar = EMPTY_CHAR;
         } else {
             currentChar = string.charAt(currentPosition);
+        }
+    }
+
+    /**
+     * A method to continue advancing until whitespace is gone
+     */
+    public void skipWhitespace() {
+        while (currentChar != EMPTY_CHAR && currentChar == SPACE) {
+            advance();
         }
     }
 
