@@ -3,59 +3,83 @@
  */
 public class Lexer {
 
+    private static final char EMPTY_CHAR = '\u0000';
     private String string;
     private int currentPosition;
     private Token currentToken;
+    private char currentChar;
 
     public Lexer(String string) {
         this.string = string;
         this.currentPosition = 0;
+        this.currentChar = string.charAt(currentPosition);
     }
 
     /**
      * Grabs the next token from the input String
      * @return The Token object of the next token
-     * @throws Exception if there is a syntax error in the input String
      */
     public Token getNextToken() {
-        // if we are past the end of the string, return an EOL token
+        while (currentChar != EMPTY_CHAR) {
+            if (currentChar == Reserved.PLUS) {
+                advance();
+                return new Token(TokenType.PLUS, Reserved.PLUS);
+            }
+
+            if (currentChar == Reserved.MINUS) {
+                advance();
+                return new Token(TokenType.MINUS, Reserved.MINUS);
+            }
+
+            if (currentChar == Reserved.MUL) {
+                advance();
+                return new Token(TokenType.MUL, Reserved.MUL);
+            }
+
+            if (currentChar == Reserved.DIV) {
+                advance();
+                return new Token(TokenType.DIV, Reserved.MUL);
+            }
+
+            if (Character.isDigit(currentChar)) {
+                int result = 0;
+                while (Character.isDigit(currentChar)) {
+                    result += Character.getNumericValue(currentChar);
+                    result *= 10;
+                    advance();
+                }
+                result /= 10;
+                return new Token(TokenType.INTEGER, result);
+            }
+
+            error();
+        }
+
+        return new Token(TokenType.EOL, null);
+    }
+
+    /**
+     * Method to advance to the next character in the String
+     */
+    public void advance() {
+        currentPosition++;
         if (currentPosition >= string.length()) {
-            return new Token(TokenType.EOL, null);
+            currentChar = '\u0000';
+        } else {
+            currentChar = string.charAt(currentPosition);
         }
-
-        char currentChar = string.charAt(currentPosition);
-
-        if (currentChar == Reserved.PLUS) {
-            currentPosition++;
-            return new Token(TokenType.PLUS, Reserved.PLUS);
-        } else if (currentChar == Reserved.MINUS) {
-            currentPosition++;
-            return new Token(TokenType.MINUS, Reserved.MINUS);
-        } else if (currentChar == Reserved.MUL) {
-            currentPosition++;
-            return new Token(TokenType.MUL, Reserved.MUL);
-        } else if (currentChar == Reserved.DIV) {
-            currentPosition++;
-            return new Token(TokenType.DIV, Reserved.MUL);
-        } else if (Character.isDigit(currentChar)) {
-            currentPosition++;
-            return new Token(TokenType.INTEGER, Character.getNumericValue(currentChar));
-        }
-
-        error();
-        return null;
     }
 
     public int expression() {
-        this.currentToken = this.getNextToken();
+        currentToken = getNextToken();
 
-        Token left = this.currentToken;
+        Token left = currentToken;
         this.eat(TokenType.INTEGER);
 
-        Token operator = this.currentToken;
+        Token operator = currentToken;
         this.eat(TokenType.PLUS);
 
-        Token right = this.currentToken;
+        Token right = currentToken;
         this.eat(TokenType.INTEGER);
 
         return (int)left.getValue() + (int)right.getValue();
@@ -67,8 +91,8 @@ public class Lexer {
      * @param type The expected TokenType of the current token
      */
     public void eat(TokenType type) {
-        if (this.currentToken.getType() == type) {
-            this.currentToken = this.getNextToken();
+        if (currentToken.getType() == type) {
+            currentToken = getNextToken();
         } else {
             error();
         }
