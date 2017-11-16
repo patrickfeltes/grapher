@@ -12,13 +12,23 @@ public class Parser {
         this.currentToken = tokenizer.getNextToken();
     }
 
+    public Node parse() {
+        Node node = expression();
+
+        if (currentToken.getType() != TokenType.EOL) {
+            System.exit(1);
+        }
+
+        return node;
+    }
+
     /**
      * Expression takes a generic expression and converts it to a syntax tree.
      * An expression is defined according to the following grammar:
      * expression: (PLUS|MINUS) term (PLUS|MINUS term)*
      * @return the abstract syntax tree of the expression
      */
-    public Node expression() {
+    private Node expression() {
         Node expressionRootNode;
 
         Token token = currentToken;
@@ -103,7 +113,6 @@ public class Parser {
             eat(TokenType.LPAREN);
             Node node = expression();
             eat(TokenType.RPAREN);
-
             return node;
         } else if (currentToken.getType() == TokenType.VAR) {
             Token token = currentToken;

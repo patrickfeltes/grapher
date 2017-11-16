@@ -14,7 +14,7 @@ public class Main {
                 break;
             }
             Map<String, Integer> variableMap = new HashMap<>();
-            System.out.println(new Parser(new Tokenizer(input)).expression().evaluate(variableMap));
+            System.out.println(new Parser(new Tokenizer(input)).parse().evaluate(variableMap));
         }
     }
 

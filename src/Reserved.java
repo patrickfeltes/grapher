@@ -6,7 +6,6 @@ public class Reserved {
     public static final char DIV = '/';
     public static final char POW = '^';
 
-
     public static final char LPAREN = '(';
     public static final char RPAREN = ')';
 
