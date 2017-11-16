@@ -1,16 +1,16 @@
 /**
- * The Lexer takes a String expression and breaks it up into tokens. Commonly known as a tokenizer
+ * The Tokenizer takes a String expression and splits it up into individual tokens for the parser
+ * to use.
  */
-public class Lexer {
+public class Tokenizer {
 
     private static final char EMPTY_CHAR = '\u0000';
     private static final char SPACE = ' ';
     private String string;
     private int currentPosition;
-    private Token currentToken;
     private char currentChar;
 
-    public Lexer(String string) {
+    public Tokenizer(String string) {
         this.string = string;
         this.currentPosition = 0;
         this.currentChar = string.charAt(currentPosition);
@@ -66,7 +66,7 @@ public class Lexer {
     /**
      * Method to advance to the next character in the String
      */
-    public void advance() {
+    private void advance() {
         currentPosition++;
         if (currentPosition >= string.length()) {
             currentChar = EMPTY_CHAR;
@@ -78,41 +78,13 @@ public class Lexer {
     /**
      * A method to continue advancing until whitespace is gone
      */
-    public void skipWhitespace() {
+    private void skipWhitespace() {
         while (currentChar != EMPTY_CHAR && currentChar == SPACE) {
             advance();
         }
     }
 
-    public int expression() {
-        currentToken = getNextToken();
-
-        Token left = currentToken;
-        this.eat(TokenType.INTEGER);
-
-        Token operator = currentToken;
-        this.eat(TokenType.PLUS);
-
-        Token right = currentToken;
-        this.eat(TokenType.INTEGER);
-
-        return (int)left.getValue() + (int)right.getValue();
-    }
-
-    /**
-     * Eat compares the current token with a given TokenType. If they match, set the current token
-     * to the next token, else error out of the program
-     * @param type The expected TokenType of the current token
-     */
-    public void eat(TokenType type) {
-        if (currentToken.getType() == type) {
-            currentToken = getNextToken();
-        } else {
-            error();
-        }
-    }
-
-    public void error() {
+    private void error() {
         System.exit(1);
     }
 }

@@ -12,7 +12,7 @@ public class Main {
                 break;
             }
 
-            System.out.println(new Lexer(input).expression());
+            System.out.println(new Parser(new Tokenizer(input)).expression());
         }
     }
 
