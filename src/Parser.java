@@ -13,10 +13,10 @@ public class Parser {
     }
 
     /**
-     * Expression takes a generic expression and evaluates it. An expression is defined according to
-     * the following grammar:
+     * Expression takes a generic expression and converts it to a syntax tree.
+     * An expression is defined according to the following grammar:
      * (PLUS|MINUS) term (PLUS|MINUS term)*
-     * @return the value of the generic expression
+     * @return the abstract syntax tree of the expression
      */
     public Node expression() {
         Node rootNode = null;
@@ -47,9 +47,10 @@ public class Parser {
     }
 
     /**
-     * The term method evaluates a term, which is defined by the following grammar:
+     * The term method creates a syntax tree that represents the term.
+     * A term is defined by the following grammar:
      * factor (MUL|DIV factor)*
-     * @return the value of the term
+     * @return the syntax tree representation of a term
      */
     public Node term() {
         Node termRootNode = factor();
@@ -70,10 +71,11 @@ public class Parser {
     }
 
     /**
-     * The factor method evaluates a factor, which is defined by the following grammar:
+     * The factor method creates a syntax tree representing a factor.
+     * A factor is defined by the following grammar:
      * INTEGER
      * | LPAREN expression RPAREN
-     * @return the value of the factor
+     * @return the syntax tree representing a factor
      */
     public Node factor() {
         if (currentToken.getType() == TokenType.LPAREN) {
