@@ -43,4 +43,22 @@ public class ParserTest {
     public void leadingNegative() throws Exception {
         assertEquals(-4, new Parser(new Tokenizer("-6 + 2")).expression().evaluate());
     }
+
+    @Test
+    public void basicPower() throws Exception {
+        assertEquals(32, new Parser(new Tokenizer("2 ^ 5")).expression().evaluate());
+        assertEquals(64, new Parser(new Tokenizer("2 ^ 6")).expression().evaluate());
+        assertEquals(27, new Parser(new Tokenizer("3 ^ 3")).expression().evaluate());
+    }
+
+    @Test
+    public void nestedPowers() throws Exception {
+        assertEquals(16, new Parser(new Tokenizer("2 ^ (2 ^ 2)")).expression().evaluate());
+        assertEquals(65536, new Parser(new Tokenizer("2 ^ (2 ^ (2 ^ 2))")).expression().evaluate());
+    }
+
+    @Test
+    public void otherOperationsInPowers() throws Exception {
+        assertEquals(16, new Parser(new Tokenizer("2 ^ (12 - 12 + 2 * 2 / 2 * 4 / 2)")).expression().evaluate());
+    }
 }

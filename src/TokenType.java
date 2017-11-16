@@ -8,6 +8,7 @@ public enum TokenType {
     DIV,
     LPAREN,
     RPAREN,
+    POW,
     EOL
 
 }

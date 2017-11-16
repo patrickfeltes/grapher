@@ -56,6 +56,11 @@ public class Tokenizer {
                 return new Token(TokenType.RPAREN, Reserved.RPAREN);
             }
 
+            if (currentChar == Reserved.POW) {
+                advance();
+                return new Token(TokenType.POW, Reserved.POW);
+            }
+
             if (Character.isDigit(currentChar)) {
                 int result = 0;
                 while (Character.isDigit(currentChar)) {

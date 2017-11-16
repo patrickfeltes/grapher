@@ -21,6 +21,8 @@ public class BinaryOperation extends Node {
             return leftChild.evaluate() * rightChild.evaluate();
         } else if (operator.getType() == TokenType.DIV) {
             return leftChild.evaluate() / rightChild.evaluate();
+        } else if (operator.getType() == TokenType.POW) {
+            return (int)Math.pow(leftChild.evaluate(), rightChild.evaluate());
         }
 
         System.out.println("Invalid binary operator: " + operator.getValue());

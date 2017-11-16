@@ -15,7 +15,7 @@ public class Parser {
     /**
      * Expression takes a generic expression and converts it to a syntax tree.
      * An expression is defined according to the following grammar:
-     * (PLUS|MINUS) term (PLUS|MINUS term)*
+     * expression: (PLUS|MINUS) term (PLUS|MINUS term)*
      * @return the abstract syntax tree of the expression
      */
     public Node expression() {
@@ -49,7 +49,7 @@ public class Parser {
     /**
      * The term method creates a syntax tree that represents the term.
      * A term is defined by the following grammar:
-     * factor (MUL|DIV factor)*
+     * term: factor (MUL|DIV factor)*
      * @return the syntax tree representation of a term
      */
     private Node term() {
@@ -71,13 +71,33 @@ public class Parser {
     }
 
     /**
-     * The factor method creates a syntax tree representing a factor.
+     * The factor method creates a syntax tree for a factor.
      * A factor is defined by the following grammar:
-     * INTEGER
-     * | LPAREN expression RPAREN
-     * @return the syntax tree representing a factor
+     * factor: powerPart (POW powerPart)*
+     * @return
      */
     private Node factor() {
+        Node powerRootNode = powerPart();
+
+        while (currentToken.getType() == TokenType.POW) {
+            Token operator = currentToken;
+
+            eat(TokenType.POW);
+            powerRootNode = new BinaryOperation(operator, powerRootNode, powerPart());
+        }
+
+        return powerRootNode;
+    }
+
+    /**
+     * The powerPart method creates a syntax tree representing a powerPart.
+     * A powerPart is defined by the following grammar:
+     * powerPart:
+     * INTEGER
+     * | LPAREN expression RPAREN
+     * @return the syntax tree representing a powerPart
+     */
+    private Node powerPart() {
         if (currentToken.getType() == TokenType.LPAREN) {
             eat(TokenType.LPAREN);
             Node node = expression();
