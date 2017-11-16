@@ -12,6 +12,12 @@ public class Parser {
         this.currentToken = tokenizer.getNextToken();
     }
 
+    /**
+     * Expression takes a generic expression and evaluates it. An expression is defined according to
+     * the following grammar:
+     * (PLUS|MINUS) term (PLUS|MINUS term)*
+     * @return the value of the generic expression
+     */
     public int expression() {
         int value = 0;
 
@@ -38,6 +44,11 @@ public class Parser {
         return value;
     }
 
+    /**
+     * The term method evaluates a term, which is defined by the following grammar:
+     * factor (MUL|DIV factor)*
+     * @return the value of the term
+     */
     public int term() {
         int value = factor();
 
@@ -56,6 +67,12 @@ public class Parser {
         return value;
     }
 
+    /**
+     * The factor method evaluates a factor, which is defined by the following grammar:
+     * INTEGER
+     * | LPAREN expression RPAREN
+     * @return the value of the factor
+     */
     public int factor() {
         if (currentToken.getType() == TokenType.LPAREN) {
             eat(TokenType.LPAREN);
@@ -64,10 +81,10 @@ public class Parser {
 
             return value;
         } else {
-            int value = (int)currentToken.getValue();
+            Token token = currentToken;
             eat(TokenType.INTEGER);
 
-            return value;
+            return (int)token.getValue();
         }
     }
 
