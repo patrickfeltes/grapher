@@ -1,3 +1,4 @@
+import java.util.Map;
 
 public class BinaryOperation extends Node {
 
@@ -12,17 +13,19 @@ public class BinaryOperation extends Node {
     }
 
     @Override
-    public int evaluate() {
+    public int evaluate(Map<String, Integer> variableMap) {
+        int leftVal = leftChild.evaluate(variableMap);
+        int rightVal = rightChild.evaluate(variableMap);
         if (operator.getType() == TokenType.PLUS) {
-            return leftChild.evaluate() + rightChild.evaluate();
+            return leftVal + rightVal;
         } else if (operator.getType() == TokenType.MINUS) {
-            return leftChild.evaluate() - rightChild.evaluate();
+            return leftVal - rightVal;
         } else if (operator.getType() == TokenType.MUL) {
-            return leftChild.evaluate() * rightChild.evaluate();
+            return leftVal * rightVal;
         } else if (operator.getType() == TokenType.DIV) {
-            return leftChild.evaluate() / rightChild.evaluate();
+            return leftVal / rightVal;
         } else if (operator.getType() == TokenType.POW) {
-            return (int)Math.pow(leftChild.evaluate(), rightChild.evaluate());
+            return (int)Math.pow(leftVal, rightVal);
         }
 
         System.out.println("Invalid binary operator: " + operator.getValue());

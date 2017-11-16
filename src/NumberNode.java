@@ -1,3 +1,4 @@
+import java.util.Map;
 
 public class NumberNode extends Node {
 
@@ -7,7 +8,7 @@ public class NumberNode extends Node {
         this.number = number;
     }
 
-    public int evaluate() {
+    public int evaluate(Map<String, Integer> variableMap) {
         return number;
     }
 

@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -11,8 +13,8 @@ public class Main {
             if (input.equalsIgnoreCase("exit")) {
                 break;
             }
-
-            System.out.println(new Parser(new Tokenizer(input)).expression().evaluate());
+            Map<String, Integer> variableMap = new HashMap<>();
+            System.out.println(new Parser(new Tokenizer(input)).expression().evaluate(variableMap));
         }
     }
 

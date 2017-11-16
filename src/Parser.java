@@ -94,6 +94,7 @@ public class Parser {
      * A powerPart is defined by the following grammar:
      * powerPart:
      * INTEGER
+     * | VAR
      * | LPAREN expression RPAREN
      * @return the syntax tree representing a powerPart
      */
@@ -104,6 +105,11 @@ public class Parser {
             eat(TokenType.RPAREN);
 
             return node;
+        } else if (currentToken.getType() == TokenType.VAR) {
+            Token token = currentToken;
+            eat(TokenType.VAR);
+
+            return new VariableNode((String)token.getValue());
         } else {
             Token token = currentToken;
             eat(TokenType.INTEGER);

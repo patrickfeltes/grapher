@@ -9,6 +9,7 @@ public enum TokenType {
     LPAREN,
     RPAREN,
     POW,
+    VAR,
     EOL
 
 }

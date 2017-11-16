@@ -26,6 +26,15 @@ public class Tokenizer {
                 skipWhitespace();
             }
 
+            if (Character.isAlphabetic(currentChar)) {
+                String variableName = "";
+                while (Character.isAlphabetic(currentChar)) {
+                    variableName += currentChar;
+                    advance();
+                }
+                return new Token(TokenType.VAR, variableName);
+            }
+
             if (currentChar == Reserved.PLUS) {
                 advance();
                 return new Token(TokenType.PLUS, Reserved.PLUS);

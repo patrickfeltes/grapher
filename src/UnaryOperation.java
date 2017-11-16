@@ -1,3 +1,4 @@
+import java.util.Map;
 
 public class UnaryOperation extends Node {
 
@@ -10,11 +11,11 @@ public class UnaryOperation extends Node {
     }
 
     @Override
-    public int evaluate() {
+    public int evaluate(Map<String, Integer> variableMap) {
         if (operator.getType() == TokenType.PLUS) {
-            return child.evaluate();
+            return child.evaluate(variableMap);
         } else if (operator.getType() == TokenType.MINUS) {
-            return -child.evaluate();
+            return -child.evaluate(variableMap);
         }
 
         System.out.println("Invalid binary operator: " + operator.getValue());
