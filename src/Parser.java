@@ -18,30 +18,32 @@ public class Parser {
      * (PLUS|MINUS) term (PLUS|MINUS term)*
      * @return the value of the generic expression
      */
-    public int expression() {
-        int value = 0;
+    public Node expression() {
+        Node rootNode = null;
 
+        Token token = currentToken;
         if (currentToken.getType() == TokenType.PLUS) {
             eat(TokenType.PLUS);
-            value += term();
+            rootNode = new UnaryOperation(token, term());
         } else if (currentToken.getType() == TokenType.MINUS) {
             eat(TokenType.MINUS);
-            value -= term();
+            rootNode = new UnaryOperation(token, term());
         } else {
-            value = term();
+            rootNode = term();
         }
 
         while (currentToken.getType() == TokenType.PLUS || currentToken.getType() == TokenType.MINUS) {
+            Token token1 = currentToken;
             if (currentToken.getType() == TokenType.PLUS) {
                 eat(TokenType.PLUS);
-                value += term();
+                rootNode = new BinaryOperation(token1, rootNode, term());
             } else {
                 eat(TokenType.MINUS);
-                value -= term();
+                rootNode = new BinaryOperation(token1, rootNode, term());
             }
         }
 
-        return value;
+        return rootNode;
     }
 
     /**
@@ -49,22 +51,22 @@ public class Parser {
      * factor (MUL|DIV factor)*
      * @return the value of the term
      */
-    public int term() {
-        int value = factor();
+    public Node term() {
+        Node termRootNode = factor();
 
         while (currentToken.getType() == TokenType.MUL || currentToken.getType() == TokenType.DIV) {
             Token operator = currentToken;
 
             if (operator.getType() == TokenType.MUL) {
                 eat(TokenType.MUL);
-                value *= factor();
+                termRootNode = new BinaryOperation(operator, termRootNode, factor());
             } else {
                 eat(TokenType.DIV);
-                value /= factor();
+                termRootNode = new BinaryOperation(operator, termRootNode, factor());
             }
         }
 
-        return value;
+        return termRootNode;
     }
 
     /**
@@ -73,18 +75,18 @@ public class Parser {
      * | LPAREN expression RPAREN
      * @return the value of the factor
      */
-    public int factor() {
+    public Node factor() {
         if (currentToken.getType() == TokenType.LPAREN) {
             eat(TokenType.LPAREN);
-            int value = expression();
+            Node node = expression();
             eat(TokenType.RPAREN);
 
-            return value;
+            return node;
         } else {
             Token token = currentToken;
             eat(TokenType.INTEGER);
 
-            return (int)token.getValue();
+            return new NumberNode((int)token.getValue());
         }
     }
 
