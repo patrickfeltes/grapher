@@ -6,6 +6,8 @@ public enum TokenType {
     MINUS,
     MUL,
     DIV,
+    LPAREN,
+    RPAREN,
     EOL
 
 }

@@ -43,7 +43,17 @@ public class Tokenizer {
 
             if (currentChar == Reserved.DIV) {
                 advance();
-                return new Token(TokenType.DIV, Reserved.MUL);
+                return new Token(TokenType.DIV, Reserved.DIV);
+            }
+
+            if (currentChar == Reserved.LPAREN) {
+                advance();
+                return new Token(TokenType.LPAREN, Reserved.LPAREN);
+            }
+
+            if (currentChar == Reserved.RPAREN) {
+                advance();
+                return new Token(TokenType.RPAREN, Reserved.RPAREN);
             }
 
             if (Character.isDigit(currentChar)) {

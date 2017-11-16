@@ -13,36 +13,62 @@ public class Parser {
     }
 
     public int expression() {
-        Token left = currentToken;
-        eat(TokenType.INTEGER);
-        Token operator = currentToken;
+        int value = 0;
 
-        if (operator.getType() == TokenType.PLUS) {
+        if (currentToken.getType() == TokenType.PLUS) {
             eat(TokenType.PLUS);
-        } else if (operator.getType() == TokenType.MINUS) {
+            value += term();
+        } else if (currentToken.getType() == TokenType.MINUS) {
             eat(TokenType.MINUS);
-        } else if (operator.getType() == TokenType.MUL) {
-            eat(TokenType.MUL);
+            value -= term();
         } else {
-            eat(TokenType.DIV);
+            value = term();
         }
 
-        Token right = currentToken;
-        eat(TokenType.INTEGER);
-
-        int value;
-
-        if (operator.getType() == TokenType.PLUS) {
-            value = (int)left.getValue() + (int)right.getValue();
-        } else if (operator.getType() == TokenType.MINUS) {
-            value = (int)left.getValue() - (int)right.getValue();
-        } else if (operator.getType() == TokenType.MUL) {
-            value = (int)left.getValue() * (int)right.getValue();
-        } else {
-            value = (int)left.getValue() / (int)right.getValue();
+        while (currentToken.getType() == TokenType.PLUS || currentToken.getType() == TokenType.MINUS) {
+            if (currentToken.getType() == TokenType.PLUS) {
+                eat(TokenType.PLUS);
+                value += term();
+            } else {
+                eat(TokenType.MINUS);
+                value -= term();
+            }
         }
 
         return value;
+    }
+
+    public int term() {
+        int value = factor();
+
+        while (currentToken.getType() == TokenType.MUL || currentToken.getType() == TokenType.DIV) {
+            Token operator = currentToken;
+
+            if (operator.getType() == TokenType.MUL) {
+                eat(TokenType.MUL);
+                value *= factor();
+            } else {
+                eat(TokenType.DIV);
+                value /= factor();
+            }
+        }
+
+        return value;
+    }
+
+    public int factor() {
+        if (currentToken.getType() == TokenType.LPAREN) {
+            eat(TokenType.LPAREN);
+            int value = expression();
+            eat(TokenType.RPAREN);
+
+            return value;
+        } else {
+            int value = (int)currentToken.getValue();
+            eat(TokenType.INTEGER);
+
+            return value;
+        }
     }
 
     /**
