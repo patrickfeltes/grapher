@@ -16,11 +16,33 @@ public class Parser {
         Token left = currentToken;
         eat(TokenType.INTEGER);
         Token operator = currentToken;
-        eat(TokenType.PLUS);
+
+        if (operator.getType() == TokenType.PLUS) {
+            eat(TokenType.PLUS);
+        } else if (operator.getType() == TokenType.MINUS) {
+            eat(TokenType.MINUS);
+        } else if (operator.getType() == TokenType.MUL) {
+            eat(TokenType.MUL);
+        } else {
+            eat(TokenType.DIV);
+        }
+
         Token right = currentToken;
         eat(TokenType.INTEGER);
 
-        return (int)left.getValue() + (int)right.getValue();
+        int value;
+
+        if (operator.getType() == TokenType.PLUS) {
+            value = (int)left.getValue() + (int)right.getValue();
+        } else if (operator.getType() == TokenType.MINUS) {
+            value = (int)left.getValue() - (int)right.getValue();
+        } else if (operator.getType() == TokenType.MUL) {
+            value = (int)left.getValue() * (int)right.getValue();
+        } else {
+            value = (int)left.getValue() / (int)right.getValue();
+        }
+
+        return value;
     }
 
     /**
