@@ -19,31 +19,31 @@ public class Parser {
      * @return the abstract syntax tree of the expression
      */
     public Node expression() {
-        Node rootNode = null;
+        Node expressionRootNode;
 
         Token token = currentToken;
         if (currentToken.getType() == TokenType.PLUS) {
             eat(TokenType.PLUS);
-            rootNode = new UnaryOperation(token, term());
+            expressionRootNode = new UnaryOperation(token, term());
         } else if (currentToken.getType() == TokenType.MINUS) {
             eat(TokenType.MINUS);
-            rootNode = new UnaryOperation(token, term());
+            expressionRootNode = new UnaryOperation(token, term());
         } else {
-            rootNode = term();
+            expressionRootNode = term();
         }
 
         while (currentToken.getType() == TokenType.PLUS || currentToken.getType() == TokenType.MINUS) {
             Token token1 = currentToken;
             if (currentToken.getType() == TokenType.PLUS) {
                 eat(TokenType.PLUS);
-                rootNode = new BinaryOperation(token1, rootNode, term());
+                expressionRootNode = new BinaryOperation(token1, expressionRootNode, term());
             } else {
                 eat(TokenType.MINUS);
-                rootNode = new BinaryOperation(token1, rootNode, term());
+                expressionRootNode = new BinaryOperation(token1, expressionRootNode, term());
             }
         }
 
-        return rootNode;
+        return expressionRootNode;
     }
 
     /**
@@ -52,7 +52,7 @@ public class Parser {
      * factor (MUL|DIV factor)*
      * @return the syntax tree representation of a term
      */
-    public Node term() {
+    private Node term() {
         Node termRootNode = factor();
 
         while (currentToken.getType() == TokenType.MUL || currentToken.getType() == TokenType.DIV) {
@@ -77,7 +77,7 @@ public class Parser {
      * | LPAREN expression RPAREN
      * @return the syntax tree representing a factor
      */
-    public Node factor() {
+    private Node factor() {
         if (currentToken.getType() == TokenType.LPAREN) {
             eat(TokenType.LPAREN);
             Node node = expression();
