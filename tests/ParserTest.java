@@ -120,4 +120,10 @@ public class ParserTest {
         assertEquals(2.0, new Parser(new Tokenizer("sqrt(4.0)")).parse().evaluate(null), 0.0);
         assertEquals(Math.sqrt(2.3), new Parser(new Tokenizer("sqrt(2.3)")).parse().evaluate(null), 0.0);
     }
+
+    @Test
+    public void testMultipleUnary() throws Exception {
+        assertEquals(4.0, new Parser(new Tokenizer("3 - -1")).parse().evaluate(null), 0.0);
+        assertEquals(2.0, new Parser(new Tokenizer("3 - - - 1")).parse().evaluate(null), 0.0);
+    }
 }

@@ -107,7 +107,9 @@ public class Parser {
      * The powerPart method creates a syntax tree representing a powerPart.
      * A powerPart is defined by the following grammar:
      * powerPart:
-     * INTEGER
+     * PLUS powerPart
+     * | MINUS powerPart
+     * | INTEGER
      * | VAR
      * | FUNC LPAREN expression RPAREN
      * | LPAREN expression RPAREN
@@ -131,6 +133,14 @@ public class Parser {
             Node inside = expression();
             eat(TokenType.RPAREN);
             return new FunctionNode((String)token.getValue(), inside);
+        } else if (currentToken.getType() == TokenType.PLUS) {
+            Token token = currentToken;
+            eat(TokenType.PLUS);
+            return new UnaryOperation(token, powerPart());
+        } else if (currentToken.getType() == TokenType.MINUS) {
+            Token token = currentToken;
+            eat(TokenType.MINUS);
+            return new UnaryOperation(token, powerPart());
         } else {
             Token token = currentToken;
             eat(TokenType.DOUBLE);

@@ -14,6 +14,7 @@ public class Main {
                 break;
             }
             Map<String, Double> variableMap = new HashMap<>();
+            variableMap.put("five", 5.);
             System.out.println(new Parser(new Tokenizer(input)).parse().evaluate(variableMap));
         }
     }
