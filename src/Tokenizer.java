@@ -1,6 +1,7 @@
-import Tokens.Reserved;
 import Tokens.Token;
 import Tokens.TokenType;
+
+import static Tokens.Reserved.*;
 
 /**
  * The Tokenizer takes a String expression and splits it up into individual tokens for the parser
@@ -37,54 +38,60 @@ public class Tokenizer {
                     advance();
                 }
                 String lowerCaseName = variableName.toLowerCase();
-                if (lowerCaseName.equals(Reserved.SIN) || lowerCaseName.equals(Reserved.COS) ||
-                        lowerCaseName.equals(Reserved.TAN) || lowerCaseName.equals(Reserved.CSC) ||
-                        lowerCaseName.equals(Reserved.SEC) || lowerCaseName.equals(Reserved.COT) ||
-                        lowerCaseName.equals(Reserved.LN) ||
-                        lowerCaseName.equalsIgnoreCase(Reserved.SQRT)) {
+                if (lowerCaseName.equals(SIN) || lowerCaseName.equals(COS) ||
+                        lowerCaseName.equals(TAN) || lowerCaseName.equals(CSC) ||
+                        lowerCaseName.equals(SEC) || lowerCaseName.equals(COT) ||
+                        lowerCaseName.equals(LN) ||
+                        lowerCaseName.equals(SQRT) || lowerCaseName.equals(COSH)
+                        || lowerCaseName.equals(SINH) || lowerCaseName.equals(TANH)
+                        || lowerCaseName.equals(SECH) || lowerCaseName.equals(CSCH)
+                        || lowerCaseName.equals(COTH) || lowerCaseName.equals(ARCCOS)
+                        || lowerCaseName.equals(ARCSIN) || lowerCaseName.equals(ARCTAN)
+                        || lowerCaseName.equals(ARCSEC) || lowerCaseName.equals(ARCCSC)
+                        || lowerCaseName.equals(ARCCOT)) {
                     return new Token(TokenType.FUNC, lowerCaseName);
-                } else if (lowerCaseName.equals(Reserved.PI)) {
+                } else if (lowerCaseName.equals(PI)) {
                     return new Token(TokenType.DOUBLE, Math.PI);
-                } else if (lowerCaseName.equals(Reserved.E)) {
+                } else if (lowerCaseName.equals(E)) {
                     return new Token(TokenType.DOUBLE, Math.E);
                 }
 
                 return new Token(TokenType.VAR, variableName);
             }
 
-            if (currentChar == Reserved.PLUS) {
+            if (currentChar == PLUS) {
                 advance();
-                return new Token(TokenType.PLUS, Reserved.PLUS);
+                return new Token(TokenType.PLUS, PLUS);
             }
 
-            if (currentChar == Reserved.MINUS) {
+            if (currentChar == MINUS) {
                 advance();
-                return new Token(TokenType.MINUS, Reserved.MINUS);
+                return new Token(TokenType.MINUS, MINUS);
             }
 
-            if (currentChar == Reserved.MUL) {
+            if (currentChar == MUL) {
                 advance();
-                return new Token(TokenType.MUL, Reserved.MUL);
+                return new Token(TokenType.MUL, MUL);
             }
 
-            if (currentChar == Reserved.DIV) {
+            if (currentChar == DIV) {
                 advance();
-                return new Token(TokenType.DIV, Reserved.DIV);
+                return new Token(TokenType.DIV, DIV);
             }
 
-            if (currentChar == Reserved.LPAREN) {
+            if (currentChar == LPAREN) {
                 advance();
-                return new Token(TokenType.LPAREN, Reserved.LPAREN);
+                return new Token(TokenType.LPAREN, LPAREN);
             }
 
-            if (currentChar == Reserved.RPAREN) {
+            if (currentChar == RPAREN) {
                 advance();
-                return new Token(TokenType.RPAREN, Reserved.RPAREN);
+                return new Token(TokenType.RPAREN, RPAREN);
             }
 
-            if (currentChar == Reserved.POW) {
+            if (currentChar == POW) {
                 advance();
-                return new Token(TokenType.POW, Reserved.POW);
+                return new Token(TokenType.POW, POW);
             }
 
             if (Character.isDigit(currentChar)) {

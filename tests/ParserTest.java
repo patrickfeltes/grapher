@@ -109,6 +109,32 @@ public class ParserTest {
     }
 
     @Test
+    public void testHyperbolicTrigFunctions() throws Exception {
+        assertEquals(Math.cosh(Math.PI / 2), new Parser(new Tokenizer("cosh(pi/2)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.cosh(1), new Parser(new Tokenizer("cosh(1)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.sinh(Math.PI / 2), new Parser(new Tokenizer("sinh(pi/2)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.sinh(1), new Parser(new Tokenizer("sinh(1)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.tanh(Math.PI), new Parser(new Tokenizer("tanh(pi)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.tanh(1), new Parser(new Tokenizer("tanh(1)")).parse().evaluate(null), 0.0);
+        assertEquals(2.0 / (Math.pow(Math.E, Math.PI) + Math.pow(Math.E, -Math.PI)), new Parser(new Tokenizer("sech(pi)")).parse().evaluate(null), 0.0);
+        assertEquals(2.0 / (Math.pow(Math.E, 1) + Math.pow(Math.E, -1)), new Parser(new Tokenizer("sech(1)")).parse().evaluate(null), 0.0);
+        assertEquals(2.0 / (Math.pow(Math.E, Math.PI) - Math.pow(Math.E, -Math.PI)), new Parser(new Tokenizer("csch(pi)")).parse().evaluate(null), 0.0);
+        assertEquals(2.0 / (Math.pow(Math.E, 1) - Math.pow(Math.E, -1)), new Parser(new Tokenizer("csch(1)")).parse().evaluate(null), 0.0);
+        assertEquals((Math.pow(Math.E, 2 * Math.PI) + 1) / (Math.pow(Math.E, 2 * Math.PI) - 1), new Parser(new Tokenizer("coth(pi)")).parse().evaluate(null), 0.0);
+        assertEquals((Math.pow(Math.E, 2 * 1) + 1) / (Math.pow(Math.E, 2 * 1) - 1), new Parser(new Tokenizer("coth(1)")).parse().evaluate(null), 0.0);
+    }
+
+    @Test
+    public void inverseTrigFunctions() throws Exception {
+        assertEquals(Math.acos(1), new Parser(new Tokenizer("arccos(1)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.asin(1), new Parser(new Tokenizer("arcsin(1)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.atan(1), new Parser(new Tokenizer("arctan(1)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.acos(1 / 2.0), new Parser(new Tokenizer("arcsec(2)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.asin(1 / 2.0), new Parser(new Tokenizer("arccsc(2)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.atan(1 / 2.0), new Parser(new Tokenizer("arccot(2)")).parse().evaluate(null), 0.0);
+    }
+
+    @Test
     public void testLog() throws Exception {
         assertEquals(Double.NaN, new Parser(new Tokenizer("ln(-1)")).parse().evaluate(null), 0.0);
         assertEquals(1.0, new Parser(new Tokenizer("ln(e)")).parse().evaluate(null), 0.0);
