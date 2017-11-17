@@ -47,13 +47,13 @@ public class Parser {
         }
 
         while (currentToken.getType() == TokenType.PLUS || currentToken.getType() == TokenType.MINUS) {
-            Token token1 = currentToken;
+            token = currentToken;
             if (currentToken.getType() == TokenType.PLUS) {
                 eat(TokenType.PLUS);
-                expressionRootNode = new BinaryOperation(token1, expressionRootNode, term());
+                expressionRootNode = new BinaryOperation(token, expressionRootNode, term());
             } else {
                 eat(TokenType.MINUS);
-                expressionRootNode = new BinaryOperation(token1, expressionRootNode, term());
+                expressionRootNode = new BinaryOperation(token, expressionRootNode, term());
             }
         }
 
@@ -116,41 +116,35 @@ public class Parser {
      * @return the syntax tree representing a powerPart
      */
     private Node powerPart() {
+        Token token = currentToken;
         if (currentToken.getType() == TokenType.LPAREN) {
             eat(TokenType.LPAREN);
             Node node = expression();
             eat(TokenType.RPAREN);
             return node;
         } else if (currentToken.getType() == TokenType.VAR) {
-            Token token = currentToken;
             eat(TokenType.VAR);
-
             return new VariableNode((String)token.getValue());
         } else if (currentToken.getType() == TokenType.FUNC) {
-            Token token = currentToken;
             eat(TokenType.FUNC);
             eat(TokenType.LPAREN);
             Node inside = expression();
             eat(TokenType.RPAREN);
             return new FunctionNode((String)token.getValue(), inside);
         } else if (currentToken.getType() == TokenType.PLUS) {
-            Token token = currentToken;
             eat(TokenType.PLUS);
             return new UnaryOperation(token, powerPart());
         } else if (currentToken.getType() == TokenType.MINUS) {
-            Token token = currentToken;
             eat(TokenType.MINUS);
             return new UnaryOperation(token, powerPart());
         } else {
-            Token token = currentToken;
             eat(TokenType.DOUBLE);
-
             return new NumberNode((double)token.getValue());
         }
     }
 
     /**
-     * Eat compares the current token with a given Tokens.TokenType. If they match, set the current token
+     * Eat compares the current token with a given TokenType. If they match, set the current token
      * to the next token, else error out of the program
      * @param type The expected Tokens.TokenType of the current token
      */

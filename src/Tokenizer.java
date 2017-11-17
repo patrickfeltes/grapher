@@ -32,11 +32,12 @@ public class Tokenizer {
             }
 
             if (Character.isAlphabetic(currentChar)) {
-                String variableName = "";
+                StringBuilder tempBuffer = new StringBuilder();
                 while (Character.isAlphabetic(currentChar)) {
-                    variableName += currentChar;
+                    tempBuffer.append(currentChar);
                     advance();
                 }
+                String variableName = tempBuffer.toString();
                 String lowerCaseName = variableName.toLowerCase();
                 if (lowerCaseName.equals(SIN) || lowerCaseName.equals(COS) ||
                         lowerCaseName.equals(TAN) || lowerCaseName.equals(CSC) ||
@@ -105,20 +106,20 @@ public class Tokenizer {
     }
 
     private Token getNumber() {
-        String value = "";
+        StringBuilder value = new StringBuilder();
         boolean hasDecimal = false;
         while (Character.isDigit(currentChar)) {
-            value += currentChar;
+            value.append(currentChar);
             advance();
             if (currentChar == '.') {
                 if (hasDecimal) error(); // two decimal points in the number
                 hasDecimal = true;
-                value += currentChar;
+                value.append(currentChar);
                 advance();
             }
         }
 
-        return new Token(TokenType.DOUBLE, Double.parseDouble(value));
+        return new Token(TokenType.DOUBLE, Double.parseDouble(value.toString()));
     }
 
     /**
