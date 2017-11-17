@@ -29,7 +29,7 @@ public class FunctionNode extends Node {
             return 1.0 / Math.cos(inside.evaluate(variableMap));
         } else if (this.function.equalsIgnoreCase(Reserved.COT)) {
             return 1.0 / Math.tan(inside.evaluate(variableMap));
-        } else if (this.function.equalsIgnoreCase(Reserved.LOG)) {
+        } else if (this.function.equalsIgnoreCase(Reserved.LN)) {
             return Math.log(inside.evaluate(variableMap));
         } else if (this.function.equalsIgnoreCase(Reserved.SQRT)) {
             return Math.sqrt(inside.evaluate(variableMap));

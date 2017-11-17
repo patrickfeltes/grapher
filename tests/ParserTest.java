@@ -110,9 +110,9 @@ public class ParserTest {
 
     @Test
     public void testLog() throws Exception {
-        assertEquals(Double.NaN, new Parser(new Tokenizer("log(-1)")).parse().evaluate(null), 0.0);
-        assertEquals(1.0, new Parser(new Tokenizer("log(e)")).parse().evaluate(null), 0.0);
-        assertEquals(Math.log(1), new Parser(new Tokenizer("log(1)")).parse().evaluate(null), 0.0);
+        assertEquals(Double.NaN, new Parser(new Tokenizer("ln(-1)")).parse().evaluate(null), 0.0);
+        assertEquals(1.0, new Parser(new Tokenizer("ln(e)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.log(1), new Parser(new Tokenizer("ln(1)")).parse().evaluate(null), 0.0);
     }
 
     @Test

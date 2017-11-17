@@ -17,7 +17,7 @@ public class Reserved {
     public static final String CSC = "csc";
     public static final String SEC = "sec";
     public static final String COT = "cot";
-    public static final String LOG = "log";
+    public static final String LN = "ln";
     public static final String SQRT = "sqrt";
 
     public static final String E = "e";
