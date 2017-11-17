@@ -1,3 +1,5 @@
+package AST;
+
 import java.util.Map;
 
 public class NumberNode extends Node {

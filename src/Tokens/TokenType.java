@@ -1,3 +1,4 @@
+package Tokens;
 
 public enum TokenType {
 
@@ -8,6 +9,7 @@ public enum TokenType {
     DIV,
     LPAREN,
     RPAREN,
+    FUNC,
     POW,
     VAR,
     EOL

@@ -1,3 +1,7 @@
+import AST.*;
+import Tokens.Token;
+import Tokens.TokenType;
+
 /**
  * The parser class handles the actual parsing of tokens into something meaningful that the program
  * can use.
@@ -105,6 +109,7 @@ public class Parser {
      * powerPart:
      * INTEGER
      * | VAR
+     * | FUNC LPAREN expression RPAREN
      * | LPAREN expression RPAREN
      * @return the syntax tree representing a powerPart
      */
@@ -119,6 +124,13 @@ public class Parser {
             eat(TokenType.VAR);
 
             return new VariableNode((String)token.getValue());
+        } else if (currentToken.getType() == TokenType.FUNC) {
+            Token token = currentToken;
+            eat(TokenType.FUNC);
+            eat(TokenType.LPAREN);
+            Node inside = expression();
+            eat(TokenType.RPAREN);
+            return new FunctionNode((String)token.getValue(), inside);
         } else {
             Token token = currentToken;
             eat(TokenType.DOUBLE);
@@ -128,9 +140,9 @@ public class Parser {
     }
 
     /**
-     * Eat compares the current token with a given TokenType. If they match, set the current token
+     * Eat compares the current token with a given Tokens.TokenType. If they match, set the current token
      * to the next token, else error out of the program
-     * @param type The expected TokenType of the current token
+     * @param type The expected Tokens.TokenType of the current token
      */
     private void eat(TokenType type) {
         if (currentToken.getType() == type) {

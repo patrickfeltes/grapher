@@ -1,6 +1,8 @@
+package Tokens;
+
 /**
- * The Token class represents the "objects" that make up various expressions. Lexer will break up
- * an input String into various Tokens of types defined in TokenType
+ * The Tokens.Token class represents the "objects" that make up various expressions. Lexer will break up
+ * an input String into various Tokens of types defined in Tokens.TokenType
  */
 public class Token {
 

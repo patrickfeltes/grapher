@@ -1,3 +1,8 @@
+package AST;
+
+import Tokens.Token;
+import Tokens.TokenType;
+
 import java.util.Map;
 
 public class BinaryOperation extends Node {

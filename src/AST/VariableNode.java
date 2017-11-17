@@ -1,3 +1,5 @@
+package AST;
+
 import java.util.Map;
 
 public class VariableNode extends Node {

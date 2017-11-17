@@ -1,3 +1,7 @@
+import Tokens.Reserved;
+import Tokens.Token;
+import Tokens.TokenType;
+
 /**
  * The Tokenizer takes a String expression and splits it up into individual tokens for the parser
  * to use.
@@ -18,7 +22,7 @@ public class Tokenizer {
 
     /**
      * Grabs the next token from the input String
-     * @return The Token object of the next token
+     * @return The Tokens.Token object of the next token
      */
     public Token getNextToken() {
         while (currentChar != EMPTY_CHAR) {
@@ -32,6 +36,18 @@ public class Tokenizer {
                     variableName += currentChar;
                     advance();
                 }
+                String lowerCaseName = variableName.toLowerCase();
+                if (lowerCaseName.equals(Reserved.SIN) || lowerCaseName.equals(Reserved.COS) ||
+                        lowerCaseName.equals(Reserved.TAN) || lowerCaseName.equals(Reserved.CSC) ||
+                        lowerCaseName.equals(Reserved.SEC) || lowerCaseName.equals(Reserved.COT) ||
+                        lowerCaseName.equals(Reserved.LOG)) {
+                    return new Token(TokenType.FUNC, lowerCaseName);
+                } else if (lowerCaseName.equals(Reserved.PI)) {
+                    return new Token(TokenType.DOUBLE, Math.PI);
+                } else if (lowerCaseName.equals(Reserved.E)) {
+                    return new Token(TokenType.DOUBLE, Math.E);
+                }
+
                 return new Token(TokenType.VAR, variableName);
             }
 
