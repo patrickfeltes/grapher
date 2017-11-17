@@ -24,6 +24,7 @@ public class UnaryOperation extends Node {
         }
 
         System.out.println("Invalid binary operator: " + operator.getValue());
-        return 0;
+        System.exit(1);
+        return Double.NaN;
     }
 }

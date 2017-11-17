@@ -16,7 +16,7 @@ public class VariableNode extends Node {
             return variableMap.get(variableName);
         } else {
             System.exit(1);
-            return -1;
+            return Double.NaN;
         }
     }
 

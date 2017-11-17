@@ -6,8 +6,8 @@ package Tokens;
  */
 public class Token {
 
-    protected TokenType type;
-    protected Object value;
+    private TokenType type;
+    private Object value;
 
     public Token(TokenType type, Object value) {
         this.type = type;

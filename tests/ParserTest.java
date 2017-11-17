@@ -86,5 +86,38 @@ public class ParserTest {
         assertEquals(2.0, new Parser(new Tokenizer("4 ^ 0.5")).parse().evaluate(null), 0.0);
     }
 
+    @Test
+    public void testIrrationals() throws Exception {
+        assertEquals(Math.PI, new Parser(new Tokenizer("pi")).parse().evaluate(null), 0.0);
+        assertEquals(Math.E, new Parser(new Tokenizer("e")).parse().evaluate(null), 0.0);
+    }
 
+    @Test
+    public void testTrigFunctions() throws Exception {
+        assertEquals(Math.cos(Math.PI / 2), new Parser(new Tokenizer("cos(pi/2)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.cos(1), new Parser(new Tokenizer("cos(1)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.sin(Math.PI / 2), new Parser(new Tokenizer("sin(pi/2)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.sin(1), new Parser(new Tokenizer("sin(1)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.tan(Math.PI), new Parser(new Tokenizer("tan(pi)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.tan(1), new Parser(new Tokenizer("tan(1)")).parse().evaluate(null), 0.0);
+        assertEquals(1 / Math.cos(Math.PI), new Parser(new Tokenizer("sec(pi)")).parse().evaluate(null), 0.0);
+        assertEquals(1 / Math.cos(1), new Parser(new Tokenizer("sec(1)")).parse().evaluate(null), 0.0);
+        assertEquals(1 / Math.sin(Math.PI / 2), new Parser(new Tokenizer("csc(pi / 2)")).parse().evaluate(null), 0.0);
+        assertEquals(1 / Math.sin(1), new Parser(new Tokenizer("csc(1)")).parse().evaluate(null), 0.0);
+        assertEquals(1 / Math.tan(Math.PI), new Parser(new Tokenizer("cot(pi)")).parse().evaluate(null), 0.0);
+        assertEquals(1 / Math.tan(1), new Parser(new Tokenizer("cot(1)")).parse().evaluate(null), 0.0);
+    }
+
+    @Test
+    public void testLog() throws Exception {
+        assertEquals(Double.NaN, new Parser(new Tokenizer("log(-1)")).parse().evaluate(null), 0.0);
+        assertEquals(1.0, new Parser(new Tokenizer("log(e)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.log(1), new Parser(new Tokenizer("log(1)")).parse().evaluate(null), 0.0);
+    }
+
+    @Test
+    public void testSqrt() throws Exception {
+        assertEquals(2.0, new Parser(new Tokenizer("sqrt(4.0)")).parse().evaluate(null), 0.0);
+        assertEquals(Math.sqrt(2.3), new Parser(new Tokenizer("sqrt(2.3)")).parse().evaluate(null), 0.0);
+    }
 }

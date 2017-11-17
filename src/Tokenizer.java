@@ -40,7 +40,8 @@ public class Tokenizer {
                 if (lowerCaseName.equals(Reserved.SIN) || lowerCaseName.equals(Reserved.COS) ||
                         lowerCaseName.equals(Reserved.TAN) || lowerCaseName.equals(Reserved.CSC) ||
                         lowerCaseName.equals(Reserved.SEC) || lowerCaseName.equals(Reserved.COT) ||
-                        lowerCaseName.equals(Reserved.LOG)) {
+                        lowerCaseName.equals(Reserved.LOG) ||
+                        lowerCaseName.equalsIgnoreCase(Reserved.SQRT)) {
                     return new Token(TokenType.FUNC, lowerCaseName);
                 } else if (lowerCaseName.equals(Reserved.PI)) {
                     return new Token(TokenType.DOUBLE, Math.PI);

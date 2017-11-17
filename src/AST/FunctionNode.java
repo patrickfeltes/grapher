@@ -31,6 +31,8 @@ public class FunctionNode extends Node {
             return 1.0 / Math.tan(inside.evaluate(variableMap));
         } else if (this.function.equalsIgnoreCase(Reserved.LOG)) {
             return Math.log(inside.evaluate(variableMap));
+        } else if (this.function.equalsIgnoreCase(Reserved.SQRT)) {
+            return Math.sqrt(inside.evaluate(variableMap));
         }
 
         System.out.println("Invalid function");
