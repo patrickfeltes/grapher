@@ -2,13 +2,13 @@ import java.util.Map;
 
 public class NumberNode extends Node {
 
-    private int number;
+    private double number;
 
-    public NumberNode(int number) {
+    public NumberNode(double number) {
         this.number = number;
     }
 
-    public int evaluate(Map<String, Integer> variableMap) {
+    public double evaluate(Map<String, Double> variableMap) {
         return number;
     }
 

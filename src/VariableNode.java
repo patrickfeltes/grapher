@@ -9,7 +9,7 @@ public class VariableNode extends Node {
     }
 
     @Override
-    public int evaluate(Map<String, Integer> variableMap) {
+    public double evaluate(Map<String, Double> variableMap) {
         if (variableMap.containsKey(variableName)) {
             return variableMap.get(variableName);
         } else {

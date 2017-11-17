@@ -71,20 +71,30 @@ public class Tokenizer {
             }
 
             if (Character.isDigit(currentChar)) {
-                int result = 0;
-                while (Character.isDigit(currentChar)) {
-                    result += Character.getNumericValue(currentChar);
-                    result *= 10;
-                    advance();
-                }
-                result /= 10;
-                return new Token(TokenType.INTEGER, result);
+                return getNumber();
             }
 
             error();
         }
 
         return new Token(TokenType.EOL, null);
+    }
+
+    private Token getNumber() {
+        String value = "";
+        boolean hasDecimal = false;
+        while (Character.isDigit(currentChar)) {
+            value += currentChar;
+            advance();
+            if (currentChar == '.') {
+                if (hasDecimal) error(); // two decimal points in the number
+                hasDecimal = true;
+                value += currentChar;
+                advance();
+            }
+        }
+
+        return new Token(TokenType.DOUBLE, Double.parseDouble(value));
     }
 
     /**

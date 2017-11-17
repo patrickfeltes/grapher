@@ -13,7 +13,7 @@ public class Main {
             if (input.equalsIgnoreCase("exit")) {
                 break;
             }
-            Map<String, Integer> variableMap = new HashMap<>();
+            Map<String, Double> variableMap = new HashMap<>();
             System.out.println(new Parser(new Tokenizer(input)).parse().evaluate(variableMap));
         }
     }

@@ -1,7 +1,7 @@
 
 public enum TokenType {
 
-    INTEGER,
+    DOUBLE,
     PLUS,
     MINUS,
     MUL,

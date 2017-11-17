@@ -121,9 +121,9 @@ public class Parser {
             return new VariableNode((String)token.getValue());
         } else {
             Token token = currentToken;
-            eat(TokenType.INTEGER);
+            eat(TokenType.DOUBLE);
 
-            return new NumberNode((int)token.getValue());
+            return new NumberNode((double)token.getValue());
         }
     }
 

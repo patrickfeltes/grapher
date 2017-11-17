@@ -13,9 +13,9 @@ public class BinaryOperation extends Node {
     }
 
     @Override
-    public int evaluate(Map<String, Integer> variableMap) {
-        int leftVal = leftChild.evaluate(variableMap);
-        int rightVal = rightChild.evaluate(variableMap);
+    public double evaluate(Map<String, Double> variableMap) {
+        double leftVal = leftChild.evaluate(variableMap);
+        double rightVal = rightChild.evaluate(variableMap);
         if (operator.getType() == TokenType.PLUS) {
             return leftVal + rightVal;
         } else if (operator.getType() == TokenType.MINUS) {
@@ -25,7 +25,7 @@ public class BinaryOperation extends Node {
         } else if (operator.getType() == TokenType.DIV) {
             return leftVal / rightVal;
         } else if (operator.getType() == TokenType.POW) {
-            return (int)Math.pow(leftVal, rightVal);
+            return Math.pow(leftVal, rightVal);
         }
 
         System.out.println("Invalid binary operator: " + operator.getValue());

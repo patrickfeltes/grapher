@@ -11,7 +11,7 @@ public class UnaryOperation extends Node {
     }
 
     @Override
-    public int evaluate(Map<String, Integer> variableMap) {
+    public double evaluate(Map<String, Double> variableMap) {
         if (operator.getType() == TokenType.PLUS) {
             return child.evaluate(variableMap);
         } else if (operator.getType() == TokenType.MINUS) {
