@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "193076034543",
+    "firebase_url": "https://graphing-program.firebaseio.com",
+    "project_id": "graphing-program",
+    "storage_bucket": "graphing-program.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193076034543:android:bc5ab87eba4361ba",
+        "android_client_info": {
+          "package_name": "com.patrickfeltes.graphingprogram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "193076034543-0pi7id7i06gkani4edn78bh762bg3d38.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.patrickfeltes.graphingprogram",
+            "certificate_hash": "00a107e7d133ee0aab7384754b8cbbb13d33147f"
+          }
+        },
+        {
+          "client_id": "193076034543-e8qp524q4ecgm9lmog9uor2srud8c37v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeNLdvSYrYxc9ltqnqOgprYcdYSVzFk0w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "193076034543-e8qp524q4ecgm9lmog9uor2srud8c37v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
