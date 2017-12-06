@@ -19,6 +19,12 @@ import java.util.List;
 
 public class EquationFragment extends Fragment {
 
+    private List<Equation> equations;
+
+    public EquationFragment() {
+        equations = new ArrayList<>();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -26,9 +32,6 @@ public class EquationFragment extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_equation_list);
         Button addEquations = (Button) view.findViewById(R.id.b_add_equations);
-
-        List<Equation> equations = new ArrayList<>();
-        equations.add(new Equation("x + 2"));
 
         final EquationAdapter adapter = new EquationAdapter(equations);
         recyclerView.setAdapter(adapter);
@@ -53,5 +56,9 @@ public class EquationFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public List<Equation> getEquationsList() {
+        return equations;
     }
 }
