@@ -15,7 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class LoginActivity extends Activity implements View.OnClickListener {
+public class LoginActivity extends UnauthenticatedActivity implements View.OnClickListener {
 
     private FirebaseAuth firebaseAuth;
 
@@ -55,9 +55,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(LoginActivity.this, firebaseAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Successfully Logged In " +
+                            firebaseAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Invalid login credentials", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Invalid login credentials",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });

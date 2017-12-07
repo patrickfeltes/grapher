@@ -7,8 +7,11 @@ import android.app.FragmentTransaction;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.patrickfeltes.graphingprogram.AuthenticatedActivity;
 import com.patrickfeltes.graphingprogram.R;
 
 import java.util.ArrayList;
@@ -16,7 +19,7 @@ import java.util.List;
 
 // code for tabbed activity comes from:
 // https://www.linux.com/learn/android-app-development-beginners-navigation-tabs
-public class GraphingActivity extends AppCompatActivity {
+public class GraphingActivity extends AuthenticatedActivity {
     private ActionBar.Tab tab1;
     private ActionBar.Tab tab2;
 

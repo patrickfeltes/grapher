@@ -1,10 +1,7 @@
 package com.patrickfeltes.graphingprogram;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +12,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class CreateAccountActivity extends Activity implements View.OnClickListener{
+public class CreateAccountActivity extends UnauthenticatedActivity implements View.OnClickListener{
 
     private EditText emailField;
     private EditText passwordField;
@@ -36,7 +33,6 @@ public class CreateAccountActivity extends Activity implements View.OnClickListe
 
         createAccountButton.setOnClickListener(this);
     }
-
 
     @Override
     public void onClick(View view) {
