@@ -1,5 +1,6 @@
 package com.patrickfeltes.graphingprogram.parser;
 
+import com.patrickfeltes.graphingprogram.parser.exceptions.InvalidExpressionException;
 import com.patrickfeltes.graphingprogram.parser.tokens.*;
 
 import static com.patrickfeltes.graphingprogram.parser.tokens.Reserved.*;
@@ -26,7 +27,7 @@ public class Tokenizer {
      * Grabs the next token from the input String
      * @return The Tokens.Token object of the next token
      */
-    public Token getNextToken() {
+    public Token getNextToken() throws InvalidExpressionException {
         while (currentChar != EMPTY_CHAR) {
             if (currentChar == SPACE) {
                 skipWhitespace();
@@ -100,20 +101,20 @@ public class Tokenizer {
                 return getNumber();
             }
 
-            error();
+            throw new InvalidExpressionException();
         }
 
         return new Token(TokenType.EOL, null);
     }
 
-    private Token getNumber() {
+    private Token getNumber() throws InvalidExpressionException {
         StringBuilder value = new StringBuilder();
         boolean hasDecimal = false;
         while (Character.isDigit(currentChar)) {
             value.append(currentChar);
             advance();
             if (currentChar == '.') {
-                if (hasDecimal) error(); // two decimal points in the number
+                if (hasDecimal) throw new InvalidExpressionException(); // two decimal points in the number
                 hasDecimal = true;
                 value.append(currentChar);
                 advance();
@@ -142,9 +143,5 @@ public class Tokenizer {
         while (currentChar != EMPTY_CHAR && currentChar == SPACE) {
             advance();
         }
-    }
-
-    private void error() {
-        System.exit(1);
     }
 }

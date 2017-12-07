@@ -1,6 +1,7 @@
 package com.patrickfeltes.graphingprogram.parser;
 
 import com.patrickfeltes.graphingprogram.parser.ast.*;
+import com.patrickfeltes.graphingprogram.parser.exceptions.InvalidExpressionException;
 import com.patrickfeltes.graphingprogram.parser.tokens.*;
 
 /**
@@ -12,16 +13,16 @@ public class Parser {
     private Tokenizer tokenizer;
     private Token currentToken;
 
-    public Parser(Tokenizer tokenizer) {
+    public Parser(Tokenizer tokenizer) throws InvalidExpressionException {
         this.tokenizer = tokenizer;
         this.currentToken = tokenizer.getNextToken();
     }
 
-    public Node parse() {
+    public Node parse() throws InvalidExpressionException {
         Node node = expression();
 
         if (currentToken.getType() != TokenType.EOL) {
-            System.exit(1);
+            throw new InvalidExpressionException();
         }
 
         return node;
@@ -33,7 +34,7 @@ public class Parser {
      * expression: (PLUS|MINUS) term (PLUS|MINUS term)*
      * @return the abstract syntax tree of the expression
      */
-    private Node expression() {
+    private Node expression() throws InvalidExpressionException {
         Node expressionRootNode;
 
         Token token = currentToken;
@@ -67,7 +68,7 @@ public class Parser {
      * term: factor (MUL|DIV factor)*
      * @return the syntax tree representation of a term
      */
-    private Node term() {
+    private Node term() throws InvalidExpressionException {
         Node termRootNode = factor();
 
         while (currentToken.getType() == TokenType.MUL || currentToken.getType() == TokenType.DIV) {
@@ -91,7 +92,7 @@ public class Parser {
      * factor: powerPart (POW powerPart)*
      * @return
      */
-    private Node factor() {
+    private Node factor() throws InvalidExpressionException {
         Node powerRootNode = powerPart();
 
         while (currentToken.getType() == TokenType.POW) {
@@ -116,7 +117,7 @@ public class Parser {
      * | LPAREN expression RPAREN
      * @return the syntax tree representing a powerPart
      */
-    private Node powerPart() {
+    private Node powerPart() throws InvalidExpressionException {
         Token token = currentToken;
         if (currentToken.getType() == TokenType.LPAREN) {
             eat(TokenType.LPAREN);
@@ -149,16 +150,12 @@ public class Parser {
      * to the next token, else error out of the program
      * @param type The expected Tokens.TokenType of the current token
      */
-    private void eat(TokenType type) {
+    private void eat(TokenType type) throws InvalidExpressionException {
         if (currentToken.getType() == type) {
             currentToken = tokenizer.getNextToken();
         } else {
-            error();
+            throw new InvalidExpressionException("Expected token of type: " + type + " but found token of type: " + currentToken.getType());
         }
-    }
-
-    private void error() {
-        System.exit(1);
     }
 
 }

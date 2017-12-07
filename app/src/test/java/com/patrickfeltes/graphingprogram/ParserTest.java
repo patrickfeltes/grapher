@@ -2,6 +2,7 @@ package com.patrickfeltes.graphingprogram;
 
 import com.patrickfeltes.graphingprogram.parser.Parser;
 import com.patrickfeltes.graphingprogram.parser.Tokenizer;
+import com.patrickfeltes.graphingprogram.parser.exceptions.InvalidExpressionException;
 
 import org.junit.Test;
 
@@ -156,5 +157,15 @@ public class ParserTest {
     public void testMultipleUnary() throws Exception {
         assertEquals(4.0, new Parser(new Tokenizer("3 - -1")).parse().evaluate(null), 0.0);
         assertEquals(2.0, new Parser(new Tokenizer("3 - - - 1")).parse().evaluate(null), 0.0);
+    }
+
+    @Test(expected = InvalidExpressionException.class)
+    public void tooFewParentheses() throws Exception {
+        new Parser(new Tokenizer("(( 1 + 2 )")).parse().evaluate(null);
+    }
+
+    @Test(expected = InvalidExpressionException.class)
+    public void tooManyParentheses() throws Exception {
+        new Parser(new Tokenizer("(( 1 + 2 )))")).parse().evaluate(null);
     }
 }
