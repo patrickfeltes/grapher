@@ -1,4 +1,4 @@
-package com.patrickfeltes.graphingprogram.AST;
+package com.patrickfeltes.graphingprogram.parser.ast;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.patrickfeltes.graphingprogram.Tokens;
+package com.patrickfeltes.graphingprogram.parser.tokens;
 
 public enum TokenType {
 

@@ -1,4 +1,4 @@
-package com.patrickfeltes.graphingprogram;
+package com.patrickfeltes.graphingprogram.userinterface.auth;
 
 import android.support.annotation.NonNull;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.patrickfeltes.graphingprogram.R;
+import com.patrickfeltes.graphingprogram.userinterface.genericactivities.UnauthenticatedActivity;
 
 public class CreateAccountActivity extends UnauthenticatedActivity implements View.OnClickListener{
 

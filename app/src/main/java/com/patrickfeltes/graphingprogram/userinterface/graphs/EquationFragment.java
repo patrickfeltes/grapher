@@ -1,4 +1,4 @@
-package com.patrickfeltes.graphingprogram.graphs;
+package com.patrickfeltes.graphingprogram.userinterface.graphs;
 
 import android.app.Fragment;
 import android.os.Bundle;

@@ -1,5 +1,8 @@
 package com.patrickfeltes.graphingprogram;
 
+import com.patrickfeltes.graphingprogram.parser.Parser;
+import com.patrickfeltes.graphingprogram.parser.Tokenizer;
+
 import org.junit.Test;
 
 import java.util.HashMap;

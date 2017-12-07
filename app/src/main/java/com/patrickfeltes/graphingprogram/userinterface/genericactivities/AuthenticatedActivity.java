@@ -1,4 +1,4 @@
-package com.patrickfeltes.graphingprogram;
+package com.patrickfeltes.graphingprogram.userinterface.genericactivities;
 
 // idea for this abstract class comes from Ben Pankow:
 // https://github.com/benpankow/pipeline-messenger/blob/master/app/src/main/java/com/benpankow/pipeline/activity/base/AuthenticatedActivity.java
@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.patrickfeltes.graphingprogram.userinterface.auth.LoginActivity;
 
 public abstract class AuthenticatedActivity extends BaseActivity {
 

@@ -1,7 +1,7 @@
-package com.patrickfeltes.graphingprogram.AST;
+package com.patrickfeltes.graphingprogram.parser.ast;
 
-import com.patrickfeltes.graphingprogram.Tokens.Token;
-import com.patrickfeltes.graphingprogram.Tokens.TokenType;
+import com.patrickfeltes.graphingprogram.parser.tokens.Token;
+import com.patrickfeltes.graphingprogram.parser.tokens.TokenType;
 
 import java.util.Map;
 

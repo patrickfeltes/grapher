@@ -1,21 +1,12 @@
-package com.patrickfeltes.graphingprogram.graphs;
+package com.patrickfeltes.graphingprogram.userinterface.graphs;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.os.Parcelable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.patrickfeltes.graphingprogram.AuthenticatedActivity;
+import com.patrickfeltes.graphingprogram.userinterface.genericactivities.AuthenticatedActivity;
 import com.patrickfeltes.graphingprogram.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 // code for tabbed activity comes from:
 // https://www.linux.com/learn/android-app-development-beginners-navigation-tabs

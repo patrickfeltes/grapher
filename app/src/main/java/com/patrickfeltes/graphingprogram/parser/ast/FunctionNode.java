@@ -1,9 +1,9 @@
-package com.patrickfeltes.graphingprogram.AST;
+package com.patrickfeltes.graphingprogram.parser.ast;
 
 import java.util.Map;
 
 import static java.lang.Double.NaN;
-import static com.patrickfeltes.graphingprogram.Tokens.Reserved.*;
+import static com.patrickfeltes.graphingprogram.parser.tokens.Reserved.*;
 
 public class FunctionNode extends Node {
 

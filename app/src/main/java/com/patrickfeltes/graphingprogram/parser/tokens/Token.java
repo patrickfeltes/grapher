@@ -1,4 +1,4 @@
-package com.patrickfeltes.graphingprogram.Tokens;
+package com.patrickfeltes.graphingprogram.parser.tokens;
 
 /**
  * The Tokens.Token class represents the "objects" that make up various expressions. Lexer will break up

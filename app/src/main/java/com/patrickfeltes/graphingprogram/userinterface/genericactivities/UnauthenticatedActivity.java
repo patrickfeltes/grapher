@@ -1,4 +1,4 @@
-package com.patrickfeltes.graphingprogram;
+package com.patrickfeltes.graphingprogram.userinterface.genericactivities;
 
 // idea for this abstract class comes from Ben Pankow:
 // https://github.com/benpankow/pipeline-messenger/blob/master/app/src/main/java/com/benpankow/pipeline/activity/base/UnauthenticatedActivity.java
@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.patrickfeltes.graphingprogram.graphs.GraphingActivity;
+import com.patrickfeltes.graphingprogram.userinterface.graphs.GraphingActivity;
 
 /**
  * An UnauthenticatedActivity does not require a user to be logged in

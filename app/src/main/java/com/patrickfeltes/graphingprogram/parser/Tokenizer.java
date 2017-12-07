@@ -1,8 +1,8 @@
-package com.patrickfeltes.graphingprogram;
+package com.patrickfeltes.graphingprogram.parser;
 
-import com.patrickfeltes.graphingprogram.Tokens.*;
+import com.patrickfeltes.graphingprogram.parser.tokens.*;
 
-import static com.patrickfeltes.graphingprogram.Tokens.Reserved.*;
+import static com.patrickfeltes.graphingprogram.parser.tokens.Reserved.*;
 
 /**
  * The Tokenizer takes a String expression and splits it up into individual tokens for the parser

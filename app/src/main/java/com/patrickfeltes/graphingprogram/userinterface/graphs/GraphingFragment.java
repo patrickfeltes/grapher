@@ -1,4 +1,4 @@
-package com.patrickfeltes.graphingprogram.graphs;
+package com.patrickfeltes.graphingprogram.userinterface.graphs;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ public class GraphingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.graphing_layout, container, false);
-        
+
         // code from:
         // http://www.android-graphview.org/zooming-and-scrolling/
         GraphView graph = (GraphView) view.findViewById(R.id.graph);

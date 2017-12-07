@@ -1,7 +1,7 @@
-package com.patrickfeltes.graphingprogram;
+package com.patrickfeltes.graphingprogram.parser;
 
-import com.patrickfeltes.graphingprogram.AST.*;
-import com.patrickfeltes.graphingprogram.Tokens.*;
+import com.patrickfeltes.graphingprogram.parser.ast.*;
+import com.patrickfeltes.graphingprogram.parser.tokens.*;
 
 /**
  * The parser class handles the actual parsing of tokens into something meaningful that the program

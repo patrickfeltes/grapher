@@ -1,4 +1,4 @@
-package com.patrickfeltes.graphingprogram.graphs;
+package com.patrickfeltes.graphingprogram.userinterface.graphs;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
