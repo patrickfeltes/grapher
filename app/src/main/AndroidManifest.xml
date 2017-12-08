@@ -13,7 +13,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".userinterface.auth.CreateAccountActivity" />
         <activity android:name=".userinterface.auth.LoginActivity" />
-        <activity android:name=".userinterface.graphs.GraphingActivity" />
+        <activity android:name=".userinterface.graphs.GraphingActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity android:name=".userinterface.GraphMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

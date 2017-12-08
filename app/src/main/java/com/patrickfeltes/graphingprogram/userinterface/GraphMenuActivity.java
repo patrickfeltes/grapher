@@ -40,7 +40,7 @@ public class GraphMenuActivity extends AuthenticatedActivity {
         );
         recyclerView.addItemDecoration(mDividerItemDecoration);
 
-        Button addGraph = (Button) findViewById(R.id.b_add_graph);
+        Button addGraph = findViewById(R.id.b_add_graph);
         addGraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -21,7 +21,7 @@ public class GraphingFragment extends Fragment {
 
         // code from:
         // http://www.android-graphview.org/zooming-and-scrolling/
-        GraphView graph = (GraphView) view.findViewById(R.id.graph);
+        GraphView graph = view.findViewById(R.id.graph);
         // first series is a line
         DataPoint[] points = new DataPoint[100];
         for (int i = 0; i < points.length; i++) {

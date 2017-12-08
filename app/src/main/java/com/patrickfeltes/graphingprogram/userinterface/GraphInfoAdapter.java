@@ -1,6 +1,7 @@
 package com.patrickfeltes.graphingprogram.userinterface;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,20 +51,18 @@ public class GraphInfoAdapter extends RecyclerView.Adapter<GraphInfoAdapter.Grap
         public GraphInfoViewHolder(View itemView) {
             super(itemView);
 
-            Log.d("TAG:", "hello");
-
-            graphName = (TextView) itemView.findViewById(R.id.tv_graph_name);
+            graphName = itemView.findViewById(R.id.tv_graph_name);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), GraphingActivity.class);
+                    intent.putExtra("graphKey", "graph1");
                     view.getContext().startActivity(intent);
                 }
             });
         }
 
         public void bind(String name, int position) {
-            Log.d("TAG", "bind");
             graphName.setText("Graph " + position);
         }
     }
