@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.patrickfeltes.graphingprogram.userinterface.GraphMenuActivity;
 import com.patrickfeltes.graphingprogram.userinterface.graphs.GraphingActivity;
 
 /**
@@ -20,7 +21,7 @@ public abstract class UnauthenticatedActivity extends BaseActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 // don't let logged in users be on unauthenticated pages
                 if (firebaseAuth.getCurrentUser() != null) {
-                    Intent intent = new Intent(UnauthenticatedActivity.this, GraphingActivity.class);
+                    Intent intent = new Intent(UnauthenticatedActivity.this, GraphMenuActivity.class);
                     UnauthenticatedActivity.this.startActivity(intent);
                 }
             }

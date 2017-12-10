@@ -1,23 +1,17 @@
 package com.patrickfeltes.graphingprogram.userinterface.graphs;
 
-import android.app.ActionBar;
-import android.app.Fragment;
+
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Window;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import com.patrickfeltes.graphingprogram.parser.ast.Node;
-import com.patrickfeltes.graphingprogram.userinterface.genericactivities.AuthenticatedActivity;
 import com.patrickfeltes.graphingprogram.R;
+import com.patrickfeltes.graphingprogram.userinterface.genericactivities.AuthenticatedActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-// code for tabbed activity comes from:
-// https://www.linux.com/learn/android-app-development-beginners-navigation-tabs
 public class GraphingActivity extends AuthenticatedActivity {
-    private ActionBar.Tab tab1;
-    private ActionBar.Tab tab2;
 
     private Fragment graphingFragment;
     private Fragment equationFragment;
@@ -29,29 +23,49 @@ public class GraphingActivity extends AuthenticatedActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.graphKey = getIntent().getExtras().getString("graphKey");
-
+        this.graphKey = "graph1";
 
         graphingFragment = new GraphingFragment();
         equationFragment = new EquationFragment();
+
+        // send graph info to the fragments
         Bundle bundle = new Bundle();
         bundle.putString("graphKey", graphKey);
         graphingFragment.setArguments(bundle);
         equationFragment.setArguments(bundle);
 
-        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+        // set the initial fragment
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.fragment_container, equationFragment);
+        ft.commit();
+
         setContentView(R.layout.activity_graphing);
+    }
 
-        ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.settings, menu);
+        return true;
+    }
 
-        tab1 = actionBar.newTab().setText("Graphs");
-        tab2 = actionBar.newTab().setText("Equations");
-
-        tab1.setTabListener(new TabListener(graphingFragment));
-        tab2.setTabListener(new TabListener(equationFragment));
-
-        actionBar.addTab(tab1);
-        actionBar.addTab(tab2);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        switch (item.getItemId()) {
+            case R.id.action_equations:
+                ft.replace(R.id.fragment_container, equationFragment);
+                ft.commit();
+                return true;
+            case R.id.action_graph:
+                ft.replace(R.id.fragment_container, graphingFragment);
+                ft.commit();
+                return true;
+            case R.id.action_share:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

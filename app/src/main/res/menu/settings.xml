@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/action_graph"
+        android:title="View Graphs"
+        app:showAsAction="never"/>
+    <item android:id="@+id/action_equations"
+        android:title="View Equations"
+        app:showAsAction="never"/>
+    <item android:id="@+id/action_share"
+        android:title="Share with others"
+        app:showAsAction="never"/>
+
+
+</menu>

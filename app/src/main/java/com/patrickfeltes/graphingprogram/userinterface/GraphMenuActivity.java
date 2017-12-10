@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.patrickfeltes.graphingprogram.R;
 import com.patrickfeltes.graphingprogram.userinterface.genericactivities.AuthenticatedActivity;
 
@@ -21,12 +22,12 @@ public class GraphMenuActivity extends AuthenticatedActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_menu);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_graph_names);
+        RecyclerView recyclerView = findViewById(R.id.rv_graph_names);
 
         List<String> names = new ArrayList<>();
         names.add("Graph 1");
-        final GraphInfoAdapter adapater = new GraphInfoAdapter(names);
-        recyclerView.setAdapter(adapater);
+        final GraphInfoAdapter adapter = new GraphInfoAdapter(names);
+        recyclerView.setAdapter(adapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -44,8 +45,13 @@ public class GraphMenuActivity extends AuthenticatedActivity {
         addGraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapater.addGraph();
+                adapter.addGraph();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 }
