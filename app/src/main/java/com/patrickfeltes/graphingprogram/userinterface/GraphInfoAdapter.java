@@ -16,10 +16,10 @@ import java.util.List;
 
 public class GraphInfoAdapter extends RecyclerView.Adapter<GraphInfoAdapter.GraphInfoViewHolder> {
 
-    private List<String> names;
+    private List<GraphInfo> graphInfoList;
 
-    public GraphInfoAdapter(List<String> names) {
-        this.names = names;
+    public GraphInfoAdapter(List<GraphInfo> graphInfoList) {
+        this.graphInfoList = graphInfoList;
     }
 
     @Override
@@ -31,16 +31,17 @@ public class GraphInfoAdapter extends RecyclerView.Adapter<GraphInfoAdapter.Grap
 
     @Override
     public void onBindViewHolder(GraphInfoViewHolder holder, int position) {
-        holder.bind(names.get(position), position);
+        holder.bind(graphInfoList.get(position));
+        Log.d("TAG:", "bind that shit");
     }
 
     @Override
     public int getItemCount() {
-        return names.size();
+        return graphInfoList.size();
     }
 
     public void addGraph() {
-        names.add("random");
+        graphInfoList.add(new GraphInfo("random", "id"));
         notifyDataSetChanged();
     }
 
@@ -62,8 +63,8 @@ public class GraphInfoAdapter extends RecyclerView.Adapter<GraphInfoAdapter.Grap
             });
         }
 
-        public void bind(String name, int position) {
-            graphName.setText("Graph " + position);
+        public void bind(GraphInfo info) {
+            graphName.setText(info.name);
         }
     }
 }

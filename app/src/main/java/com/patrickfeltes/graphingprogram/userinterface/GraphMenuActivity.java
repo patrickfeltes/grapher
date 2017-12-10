@@ -7,12 +7,18 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 import com.patrickfeltes.graphingprogram.R;
 import com.patrickfeltes.graphingprogram.userinterface.genericactivities.AuthenticatedActivity;
 
@@ -21,15 +27,16 @@ import java.util.List;
 
 public class GraphMenuActivity extends AuthenticatedActivity {
 
+    private List<GraphInfo> graphNames;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_menu);
-
+        graphNames = new ArrayList<>();
         RecyclerView recyclerView = findViewById(R.id.rv_graph_names);
-        List<String> names = new ArrayList<>();
-        names.add("Graph 1");
-        final GraphInfoAdapter adapter = new GraphInfoAdapter(names);
+        String UID = FirebaseAuth.getInstance().getUid();
+        final GraphInfoAdapter adapter = new GraphInfoAdapter(graphNames);
         recyclerView.setAdapter(adapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -43,6 +50,18 @@ public class GraphMenuActivity extends AuthenticatedActivity {
                 layoutManager.getOrientation()
         );
         recyclerView.addItemDecoration(mDividerItemDecoration);
+
+        final GenericTypeIndicator<List<GraphInfo>> genericTypeIndicator =new GenericTypeIndicator<List<GraphInfo>>(){};
+        FirebaseDatabase.getInstance().getReference("graphs-info").child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                graphNames.addAll(dataSnapshot.getValue(genericTypeIndicator));
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
 
         Button addGraph = findViewById(R.id.b_add_graph);
         addGraph.setOnClickListener(new View.OnClickListener() {
