@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,11 +34,12 @@ public class EquationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.equation_layout, container, false);
         equations = new ArrayList<>();
+        String graphKey = getArguments().getString("graphKey");
 
         final RecyclerView recyclerView = view.findViewById(R.id.rv_equation_list);
         Button addEquations = view.findViewById(R.id.b_add_equations);
 
-        final EquationAdapter adapter = new EquationAdapter(equations);
+        final EquationAdapter adapter = new EquationAdapter(equations, graphKey);
         recyclerView.setAdapter(adapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
@@ -51,8 +53,6 @@ public class EquationFragment extends Fragment {
                 layoutManager.getOrientation()
         );
         recyclerView.addItemDecoration(mDividerItemDecoration);
-
-        String graphKey = getArguments().getString("graphKey");
         FirebaseDatabase.getInstance().getReference("graphs").child(graphKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

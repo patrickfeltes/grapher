@@ -32,7 +32,6 @@ public class GraphInfoAdapter extends RecyclerView.Adapter<GraphInfoAdapter.Grap
     @Override
     public void onBindViewHolder(GraphInfoViewHolder holder, int position) {
         holder.bind(graphInfoList.get(position));
-        Log.d("TAG:", "bind that shit");
     }
 
     @Override
@@ -47,24 +46,25 @@ public class GraphInfoAdapter extends RecyclerView.Adapter<GraphInfoAdapter.Grap
 
     class GraphInfoViewHolder extends RecyclerView.ViewHolder {
 
+        View itemView;
         TextView graphName;
 
         public GraphInfoViewHolder(View itemView) {
             super(itemView);
-
+            this.itemView = itemView;
             graphName = itemView.findViewById(R.id.tv_graph_name);
+        }
+
+        public void bind(final GraphInfo info) {
+            graphName.setText(info.name);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), GraphingActivity.class);
-                    intent.putExtra("graphKey", "graph1");
-                    view.getContext().startActivity(intent);
+                    Intent intent = new Intent(itemView.getContext(), GraphingActivity.class);
+                    intent.putExtra("graphKey", info.id);
+                    itemView.getContext().startActivity(intent);
                 }
             });
-        }
-
-        public void bind(GraphInfo info) {
-            graphName.setText(info.name);
         }
     }
 }

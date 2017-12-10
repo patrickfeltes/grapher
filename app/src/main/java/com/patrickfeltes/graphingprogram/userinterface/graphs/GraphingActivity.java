@@ -23,7 +23,7 @@ public class GraphingActivity extends AuthenticatedActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.graphKey = "graph1";
+        this.graphKey = (String) getIntent().getExtras().get("graphKey");
 
         graphingFragment = new GraphingFragment();
         equationFragment = new EquationFragment();

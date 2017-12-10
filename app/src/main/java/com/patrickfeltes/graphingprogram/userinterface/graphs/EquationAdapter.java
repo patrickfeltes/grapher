@@ -19,9 +19,11 @@ import java.util.List;
 
 public class EquationAdapter extends RecyclerView.Adapter<EquationAdapter.EquationViewHolder> {
     private List<String> equationList;
+    private String graphKey;
 
-    public EquationAdapter(List<String> equationList) {
+    public EquationAdapter(List<String> equationList, String graphKey) {
         this.equationList = equationList;
+        this.graphKey = graphKey;
     }
 
     @Override
@@ -69,7 +71,7 @@ public class EquationAdapter extends RecyclerView.Adapter<EquationAdapter.Equati
                             // will throw exception if the expression is invalid
                             new Parser(new Tokenizer(equationField.getText().toString())).parse();
                             equationList.set(position, equationField.getText().toString());
-                            FirebaseDatabase.getInstance().getReference("graphs").child("graph1").child("equations").setValue(equationList);
+                            FirebaseDatabase.getInstance().getReference("graphs").child(graphKey).child("equations").setValue(equationList);
                         } catch(InvalidExpressionException e) {
                             Toast.makeText(view.getContext(), "Invalid expression.", Toast.LENGTH_SHORT).show();
                         }
