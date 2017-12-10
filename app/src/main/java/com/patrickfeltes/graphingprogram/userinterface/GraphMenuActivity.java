@@ -2,9 +2,13 @@ package com.patrickfeltes.graphingprogram.userinterface;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -23,7 +27,6 @@ public class GraphMenuActivity extends AuthenticatedActivity {
         setContentView(R.layout.activity_graph_menu);
 
         RecyclerView recyclerView = findViewById(R.id.rv_graph_names);
-
         List<String> names = new ArrayList<>();
         names.add("Graph 1");
         final GraphInfoAdapter adapter = new GraphInfoAdapter(names);
@@ -51,7 +54,19 @@ public class GraphMenuActivity extends AuthenticatedActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.graph_menu_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sign_out:
+                FirebaseAuth.getInstance().signOut();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

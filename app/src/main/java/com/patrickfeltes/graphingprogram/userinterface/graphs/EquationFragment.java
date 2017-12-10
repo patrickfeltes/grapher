@@ -20,7 +20,6 @@ import com.patrickfeltes.graphingprogram.R;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class EquationFragment extends Fragment {
 
     private List<String> equations;
