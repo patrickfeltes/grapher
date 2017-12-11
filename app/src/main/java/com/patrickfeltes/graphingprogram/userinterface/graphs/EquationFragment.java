@@ -56,8 +56,13 @@ public class EquationFragment extends Fragment {
         FirebaseDatabase.getInstance().getReference("graphs").child(graphKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                equations.addAll(dataSnapshot.getValue(EquationList.class).equations);
-                adapter.notifyDataSetChanged();
+                if (dataSnapshot.exists()) {
+                    List<String> equationsToAdd = dataSnapshot.getValue(EquationList.class).equations;
+                    if (equationsToAdd != null) {
+                        equations.addAll(dataSnapshot.getValue(EquationList.class).equations);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
             }
 
             @Override

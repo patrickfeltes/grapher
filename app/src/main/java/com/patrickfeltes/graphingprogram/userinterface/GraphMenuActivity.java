@@ -1,5 +1,7 @@
 package com.patrickfeltes.graphingprogram.userinterface;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -20,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.patrickfeltes.graphingprogram.R;
+import com.patrickfeltes.graphingprogram.database.FirebaseUtilities;
 import com.patrickfeltes.graphingprogram.userinterface.genericactivities.AuthenticatedActivity;
 
 import java.util.ArrayList;
@@ -29,6 +32,10 @@ public class GraphMenuActivity extends AuthenticatedActivity {
 
     private List<GraphInfo> graphNames;
 
+    public static final int ACTIVITY_RESULT_CODE = 0;
+
+    private GraphInfoAdapter adapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +43,7 @@ public class GraphMenuActivity extends AuthenticatedActivity {
         graphNames = new ArrayList<>();
         RecyclerView recyclerView = findViewById(R.id.rv_graph_names);
         String UID = FirebaseAuth.getInstance().getUid();
-        final GraphInfoAdapter adapter = new GraphInfoAdapter(graphNames);
+        adapter = new GraphInfoAdapter(graphNames);
         recyclerView.setAdapter(adapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -55,8 +62,10 @@ public class GraphMenuActivity extends AuthenticatedActivity {
         FirebaseDatabase.getInstance().getReference("graphs-info").child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                graphNames.addAll(dataSnapshot.getValue(genericTypeIndicator));
-                adapter.notifyDataSetChanged();
+                if (dataSnapshot.exists()) {
+                    graphNames.addAll(dataSnapshot.getValue(genericTypeIndicator));
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -67,9 +76,24 @@ public class GraphMenuActivity extends AuthenticatedActivity {
         addGraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter.addGraph();
+                Intent intent = new Intent(view.getContext(), NewGraphActivity.class);
+                ((Activity)(view.getContext())).startActivityForResult(intent, ACTIVITY_RESULT_CODE);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (ACTIVITY_RESULT_CODE) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    String newGraphName = data.getStringExtra("graphName");
+                    FirebaseUtilities.createNewGraph(FirebaseAuth.getInstance().getUid(), newGraphName, graphNames, adapter);
+                }
+                break;
+            }
+        }
     }
 
     @Override

@@ -39,11 +39,6 @@ public class GraphInfoAdapter extends RecyclerView.Adapter<GraphInfoAdapter.Grap
         return graphInfoList.size();
     }
 
-    public void addGraph() {
-        graphInfoList.add(new GraphInfo("random", "id"));
-        notifyDataSetChanged();
-    }
-
     class GraphInfoViewHolder extends RecyclerView.ViewHolder {
 
         View itemView;
