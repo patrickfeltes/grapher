@@ -1,6 +1,7 @@
 package com.patrickfeltes.graphingprogram.userinterface.graphs;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ public class EquationAdapter extends RecyclerView.Adapter<EquationAdapter.Equati
 
     @Override
     public void onBindViewHolder(EquationAdapter.EquationViewHolder holder, int position) {
-        holder.bind(equationList.get(position), position);
+        holder.bind(equationList.get(position));
     }
 
     @Override
@@ -58,8 +59,6 @@ public class EquationAdapter extends RecyclerView.Adapter<EquationAdapter.Equati
         TextView equationLabel;
         EditText equationField;
 
-        private int position;
-
         public EquationViewHolder(View itemView) {
             super(itemView);
 
@@ -70,11 +69,18 @@ public class EquationAdapter extends RecyclerView.Adapter<EquationAdapter.Equati
                 @Override
                 public void onFocusChange(View view, boolean hasFocus) {
                     if (!hasFocus) {
-                        if (equationField.getText().toString().trim().length() == 0) return;
+                        // we should add to database if it's an empty equation
+                        String equation = equationField.getText().toString();
+                        if (equation.trim().length() == 0) {
+                            Log.d("TAG","hello");
+                            equationList.set(getLayoutPosition(), equation);
+                            FirebaseRoutes.getGraphEquationsRoute(graphKey).setValue(equationList);
+                            return;
+                        }
                         try {
                             // will throw exception if the expression is invalid
                             new Parser(new Tokenizer(equationField.getText().toString())).parse();
-                            equationList.set(position, equationField.getText().toString());
+                            equationList.set(getLayoutPosition(), equation);
                             FirebaseRoutes.getGraphEquationsRoute(graphKey).setValue(equationList);
                         } catch(InvalidExpressionException e) {
                             Toast.makeText(view.getContext(), "Invalid expression.", Toast.LENGTH_SHORT).show();
@@ -84,9 +90,8 @@ public class EquationAdapter extends RecyclerView.Adapter<EquationAdapter.Equati
             });
         }
 
-        void bind(String equation, int position) {
-            this.position = position;
-            equationLabel.setText("y" + (position + 1) + "(x)=");
+        void bind(String equation) {
+            equationLabel.setText("y" + (getLayoutPosition() + 1) + "(x)=");
             equationField.setText(equation);
         }
     }
