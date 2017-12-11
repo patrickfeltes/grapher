@@ -1,15 +1,12 @@
-package com.patrickfeltes.graphingprogram.userinterface;
+package com.patrickfeltes.graphingprogram.userinterface.graph_menu;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +20,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.patrickfeltes.graphingprogram.R;
 import com.patrickfeltes.graphingprogram.database.FirebaseUtilities;
+import com.patrickfeltes.graphingprogram.database.objects.GraphInfo;
 import com.patrickfeltes.graphingprogram.userinterface.genericactivities.AuthenticatedActivity;
 
 import java.util.ArrayList;

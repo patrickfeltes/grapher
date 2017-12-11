@@ -22,8 +22,8 @@
         <activity
             android:name=".userinterface.graphs.GraphingActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"></activity>
-        <activity android:name=".userinterface.GraphMenuActivity"></activity>
-        <activity android:name=".userinterface.NewGraphActivity"></activity>
+        <activity android:name=".userinterface.graph_menu.GraphMenuActivity"></activity>
+        <activity android:name=".userinterface.graph_menu.NewGraphActivity"></activity>
     </application>
 
 </manifest>

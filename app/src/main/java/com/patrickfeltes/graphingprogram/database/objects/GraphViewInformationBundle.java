@@ -1,12 +1,12 @@
-package com.patrickfeltes.graphingprogram.userinterface.graphs;
+package com.patrickfeltes.graphingprogram.database.objects;
 
-public class GraphInformation {
+public class GraphViewInformationBundle {
     private double minX;
     private double maxX;
     private int partitions;
     private String equation;
 
-    public GraphInformation(double minX, double maxX, int partitions, String equation) {
+    public GraphViewInformationBundle(double minX, double maxX, int partitions, String equation) {
         this.minX = minX;
         this.maxX = maxX;
         this.partitions = partitions;

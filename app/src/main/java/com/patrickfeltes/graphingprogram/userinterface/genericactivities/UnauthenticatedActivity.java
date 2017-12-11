@@ -7,8 +7,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.patrickfeltes.graphingprogram.userinterface.GraphMenuActivity;
-import com.patrickfeltes.graphingprogram.userinterface.graphs.GraphingActivity;
+import com.patrickfeltes.graphingprogram.userinterface.graph_menu.GraphMenuActivity;
 
 /**
  * An UnauthenticatedActivity does not require a user to be logged in

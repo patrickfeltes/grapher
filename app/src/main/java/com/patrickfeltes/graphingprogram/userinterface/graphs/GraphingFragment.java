@@ -12,9 +12,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 import com.patrickfeltes.graphingprogram.R;
+import com.patrickfeltes.graphingprogram.database.objects.EquationList;
+import com.patrickfeltes.graphingprogram.database.objects.GraphViewInformationBundle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class GraphingFragment extends Fragment {
         maxX = 10;
         minY = -10;
         maxY = 10;
-        partitions = 100;
+        partitions = 500;
 
         // code from:
         // http://www.android-graphview.org/zooming-and-scrolling/
@@ -57,7 +57,7 @@ public class GraphingFragment extends Fragment {
                         equations.addAll(dataSnapshot.getValue(EquationList.class).equations);
                         for (String equation : equations) {
                             if (equation.trim().length() != 0) {
-                                new EvaluatePointsAsyncTask(graph).execute(new GraphInformation(minX, maxX, partitions, equation));
+                                new EvaluatePointsAsyncTask(graph).execute(new GraphViewInformationBundle(minX, maxX, partitions, equation));
                             }
                         }
                     }

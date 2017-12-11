@@ -1,4 +1,4 @@
-package com.patrickfeltes.graphingprogram.userinterface;
+package com.patrickfeltes.graphingprogram.userinterface.graph_menu;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

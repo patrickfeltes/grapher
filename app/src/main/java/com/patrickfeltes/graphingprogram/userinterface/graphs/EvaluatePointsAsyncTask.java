@@ -2,11 +2,11 @@ package com.patrickfeltes.graphingprogram.userinterface.graphs;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.patrickfeltes.graphingprogram.database.objects.GraphViewInformationBundle;
 import com.patrickfeltes.graphingprogram.parser.Parser;
 import com.patrickfeltes.graphingprogram.parser.Tokenizer;
 import com.patrickfeltes.graphingprogram.parser.ast.Node;
@@ -15,7 +15,7 @@ import com.patrickfeltes.graphingprogram.parser.exceptions.InvalidExpressionExce
 import java.util.HashMap;
 import java.util.Random;
 
-public class EvaluatePointsAsyncTask extends AsyncTask<GraphInformation, Void, LineGraphSeries<DataPoint>> {
+public class EvaluatePointsAsyncTask extends AsyncTask<GraphViewInformationBundle, Void, LineGraphSeries<DataPoint>> {
 
     private GraphView graphView;
 
@@ -24,8 +24,8 @@ public class EvaluatePointsAsyncTask extends AsyncTask<GraphInformation, Void, L
     }
 
     @Override
-    protected LineGraphSeries<DataPoint> doInBackground(GraphInformation... graphInformations) {
-        GraphInformation graphInformation = graphInformations[0];
+    protected LineGraphSeries<DataPoint> doInBackground(GraphViewInformationBundle... graphInformations) {
+        GraphViewInformationBundle graphInformation = graphInformations[0];
         LineGraphSeries<DataPoint> series = null;
         try {
             Node equation = new Parser(new Tokenizer(graphInformation.getEquation())).parse();

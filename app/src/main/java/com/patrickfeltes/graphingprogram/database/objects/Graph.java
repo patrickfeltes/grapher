@@ -1,4 +1,4 @@
-package com.patrickfeltes.graphingprogram;
+package com.patrickfeltes.graphingprogram.database.objects;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.patrickfeltes.graphingprogram.userinterface;
+package com.patrickfeltes.graphingprogram.database.objects;
 
 public class GraphInfo {
 
