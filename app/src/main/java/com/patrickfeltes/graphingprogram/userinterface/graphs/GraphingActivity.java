@@ -8,29 +8,31 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.patrickfeltes.graphingprogram.ExtraKeys;
 import com.patrickfeltes.graphingprogram.R;
 import com.patrickfeltes.graphingprogram.userinterface.genericactivities.AuthenticatedActivity;
 
+/**
+ * GraphingActivity handles equation input, graphing of functions, and sharing with other users
+ */
 public class GraphingActivity extends AuthenticatedActivity {
 
     private Fragment graphingFragment;
     private Fragment equationFragment;
-
-    private String graphKey;
 
     // manifest is set to not recreate on orientation change
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.graphKey = (String) getIntent().getExtras().get("graphKey");
+        String graphKey = (String) getIntent().getExtras().get(ExtraKeys.GRAPH_KEY);
 
         graphingFragment = new GraphingFragment();
         equationFragment = new EquationFragment();
 
         // send graph info to the fragments
         Bundle bundle = new Bundle();
-        bundle.putString("graphKey", graphKey);
+        bundle.putString(ExtraKeys.GRAPH_KEY, graphKey);
         graphingFragment.setArguments(bundle);
         equationFragment.setArguments(bundle);
 

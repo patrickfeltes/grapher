@@ -13,14 +13,18 @@ import android.widget.Button;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.patrickfeltes.graphingprogram.ExtraKeys;
 import com.patrickfeltes.graphingprogram.R;
 import com.patrickfeltes.graphingprogram.database.objects.EquationList;
+import com.patrickfeltes.graphingprogram.database.FirebaseRoutes;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Equation fragment handles user input of equations for a graph.
+ */
 public class EquationFragment extends Fragment {
 
     private List<String> equations;
@@ -34,7 +38,7 @@ public class EquationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.equation_layout, container, false);
         equations = new ArrayList<>();
-        String graphKey = getArguments().getString("graphKey");
+        String graphKey = getArguments().getString(ExtraKeys.GRAPH_KEY);
 
         final RecyclerView recyclerView = view.findViewById(R.id.rv_equation_list);
         Button addEquations = view.findViewById(R.id.b_add_equations);
@@ -53,7 +57,7 @@ public class EquationFragment extends Fragment {
                 layoutManager.getOrientation()
         );
         recyclerView.addItemDecoration(mDividerItemDecoration);
-        FirebaseDatabase.getInstance().getReference("graphs").child(graphKey).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseRoutes.getGraphRoute(graphKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {

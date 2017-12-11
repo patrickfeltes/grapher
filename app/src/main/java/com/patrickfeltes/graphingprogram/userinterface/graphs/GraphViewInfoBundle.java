@@ -1,12 +1,17 @@
-package com.patrickfeltes.graphingprogram.database.objects;
+package com.patrickfeltes.graphingprogram.userinterface.graphs;
 
-public class GraphViewInformationBundle {
+/**
+ * GraphViewInfoBundle is used to bundle all necessary information about the graph view to
+ * send to the PlotTask
+ */
+public class GraphViewInfoBundle {
+
     private double minX;
     private double maxX;
     private int partitions;
     private String equation;
 
-    public GraphViewInformationBundle(double minX, double maxX, int partitions, String equation) {
+    public GraphViewInfoBundle(double minX, double maxX, int partitions, String equation) {
         this.minX = minX;
         this.maxX = maxX;
         this.partitions = partitions;

@@ -9,24 +9,26 @@ import android.view.ViewGroup;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
+import com.patrickfeltes.graphingprogram.ExtraKeys;
 import com.patrickfeltes.graphingprogram.R;
 import com.patrickfeltes.graphingprogram.database.objects.EquationList;
-import com.patrickfeltes.graphingprogram.database.objects.GraphViewInformationBundle;
+import com.patrickfeltes.graphingprogram.database.FirebaseRoutes;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * GraphingFragment handles all of the plotting of graphs in the GraphingActivity
+ */
 public class GraphingFragment extends Fragment {
 
-    private double minX;
-    private double maxX;
-    private double minY;
-    private double maxY;
-
-    private int partitions;
+    private final double minX = -10;
+    private final double maxX = 10;
+    private final double minY = -10;
+    private final double maxY = 10;
+    private final int numberOfPartitions = 500;
 
     private List<String> equations;
 
@@ -37,18 +39,10 @@ public class GraphingFragment extends Fragment {
 
         equations = new ArrayList<>();
 
-        minX = -10;
-        maxX = 10;
-        minY = -10;
-        maxY = 10;
-        partitions = 500;
-
-        // code from:
-        // http://www.android-graphview.org/zooming-and-scrolling/
         final GraphView graph = view.findViewById(R.id.graph);
 
-        String graphKey = getArguments().getString("graphKey");
-        FirebaseDatabase.getInstance().getReference("graphs").child(graphKey).addListenerForSingleValueEvent(new ValueEventListener() {
+        String graphKey = getArguments().getString(ExtraKeys.GRAPH_KEY);
+        FirebaseRoutes.getGraphRoute(graphKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -57,7 +51,7 @@ public class GraphingFragment extends Fragment {
                         equations.addAll(dataSnapshot.getValue(EquationList.class).equations);
                         for (String equation : equations) {
                             if (equation.trim().length() != 0) {
-                                new EvaluatePointsAsyncTask(graph).execute(new GraphViewInformationBundle(minX, maxX, partitions, equation));
+                                new PlotTask(graph).execute(new GraphViewInfoBundle(minX, maxX, numberOfPartitions, equation));
                             }
                         }
                     }
@@ -68,7 +62,7 @@ public class GraphingFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
-        // set manual X bounds
+        // set bounds
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setMinY(minY);
         graph.getViewport().setMaxY(maxY);
@@ -77,7 +71,7 @@ public class GraphingFragment extends Fragment {
         graph.getViewport().setMinX(minX);
         graph.getViewport().setMaxX(maxX);
 
-        // enable scaling and scrolling
+        // allow zooming and scrolling
         graph.getViewport().setScalable(true);
         graph.getViewport().setScalableY(true);
 

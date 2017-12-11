@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * BaseActivity is a super class for all Activities
+ */
 public abstract class BaseActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
@@ -37,7 +40,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-
         auth.removeAuthStateListener(listener);
     }
 }

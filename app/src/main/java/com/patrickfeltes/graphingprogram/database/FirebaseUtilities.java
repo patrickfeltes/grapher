@@ -13,6 +13,9 @@ import com.patrickfeltes.graphingprogram.database.objects.GraphInfo;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utility functions for Firebase
+ */
 public class FirebaseUtilities {
 
     public static void addUserToDatabase(String UID, String username) {

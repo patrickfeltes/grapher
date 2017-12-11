@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.patrickfeltes.graphingprogram.R;
+import com.patrickfeltes.graphingprogram.database.FirebaseRoutes;
 import com.patrickfeltes.graphingprogram.parser.Parser;
 import com.patrickfeltes.graphingprogram.parser.Tokenizer;
 import com.patrickfeltes.graphingprogram.parser.exceptions.InvalidExpressionException;
@@ -17,6 +18,9 @@ import com.patrickfeltes.graphingprogram.parser.exceptions.InvalidExpressionExce
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The adapter that handles equation input in EquationFragment.
+ */
 public class EquationAdapter extends RecyclerView.Adapter<EquationAdapter.EquationViewHolder> {
     private List<String> equationList;
     private String graphKey;
@@ -71,7 +75,7 @@ public class EquationAdapter extends RecyclerView.Adapter<EquationAdapter.Equati
                             // will throw exception if the expression is invalid
                             new Parser(new Tokenizer(equationField.getText().toString())).parse();
                             equationList.set(position, equationField.getText().toString());
-                            FirebaseDatabase.getInstance().getReference("graphs").child(graphKey).child("equations").setValue(equationList);
+                            FirebaseRoutes.getGraphEquationsRoute(graphKey).setValue(equationList);
                         } catch(InvalidExpressionException e) {
                             Toast.makeText(view.getContext(), "Invalid expression.", Toast.LENGTH_SHORT).show();
                         }

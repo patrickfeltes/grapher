@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.patrickfeltes.graphingprogram.ExtraKeys;
 import com.patrickfeltes.graphingprogram.R;
 import com.patrickfeltes.graphingprogram.database.objects.GraphInfo;
 import com.patrickfeltes.graphingprogram.userinterface.graphs.GraphingActivity;
@@ -51,11 +52,12 @@ public class GraphInfoAdapter extends RecyclerView.Adapter<GraphInfoAdapter.Grap
 
         void bind(final GraphInfo info) {
             graphName.setText(info.name);
+            // if a graph view holder is clicked, start a new GraphingActivity with its information
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(itemView.getContext(), GraphingActivity.class);
-                    intent.putExtra("graphKey", info.id);
+                    intent.putExtra(ExtraKeys.GRAPH_KEY, info.id);
                     itemView.getContext().startActivity(intent);
                 }
             });

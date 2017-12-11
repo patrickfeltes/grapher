@@ -11,6 +11,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.patrickfeltes.graphingprogram.userinterface.auth.LoginActivity;
 
+/**
+ * An AuthenticatedActivity requires a user to be logged in. If they are not, the wll be redirected
+ * to a specified activity.
+ */
 public abstract class AuthenticatedActivity extends BaseActivity {
 
     protected FirebaseAuth.AuthStateListener createAuthStateListener() {

@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
-import com.patrickfeltes.graphingprogram.database.objects.GraphViewInformationBundle;
 import com.patrickfeltes.graphingprogram.parser.Parser;
 import com.patrickfeltes.graphingprogram.parser.Tokenizer;
 import com.patrickfeltes.graphingprogram.parser.ast.Node;
@@ -15,17 +14,20 @@ import com.patrickfeltes.graphingprogram.parser.exceptions.InvalidExpressionExce
 import java.util.HashMap;
 import java.util.Random;
 
-public class EvaluatePointsAsyncTask extends AsyncTask<GraphViewInformationBundle, Void, LineGraphSeries<DataPoint>> {
+/**
+ * PlotTask evaluates an equation over a set of points and plots it on the passed GraphView.
+ */
+public class PlotTask extends AsyncTask<GraphViewInfoBundle, Void, LineGraphSeries<DataPoint>> {
 
     private GraphView graphView;
 
-    public EvaluatePointsAsyncTask(GraphView graphView) {
+    public PlotTask(GraphView graphView) {
         this.graphView = graphView;
     }
 
     @Override
-    protected LineGraphSeries<DataPoint> doInBackground(GraphViewInformationBundle... graphInformations) {
-        GraphViewInformationBundle graphInformation = graphInformations[0];
+    protected LineGraphSeries<DataPoint> doInBackground(GraphViewInfoBundle... graphInformations) {
+        GraphViewInfoBundle graphInformation = graphInformations[0];
         LineGraphSeries<DataPoint> series = null;
         try {
             Node equation = new Parser(new Tokenizer(graphInformation.getEquation())).parse();

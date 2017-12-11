@@ -7,8 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.patrickfeltes.graphingprogram.ExtraKeys;
 import com.patrickfeltes.graphingprogram.R;
 
+/**
+ * Activity where users can enter information to create a new graph.
+ */
 public class NewGraphActivity extends AppCompatActivity {
 
     @Override
@@ -23,7 +27,7 @@ public class NewGraphActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (graphName.getText().toString().trim().length() != 0) {
                     Intent result = new Intent();
-                    result.putExtra("graphName", graphName.getText().toString());
+                    result.putExtra(ExtraKeys.GRAPH_NAME, graphName.getText().toString());
                     setResult(RESULT_OK, result);
                     finish();
                 }
