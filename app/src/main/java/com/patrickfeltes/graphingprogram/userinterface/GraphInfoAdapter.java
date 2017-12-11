@@ -44,13 +44,13 @@ public class GraphInfoAdapter extends RecyclerView.Adapter<GraphInfoAdapter.Grap
         View itemView;
         TextView graphName;
 
-        public GraphInfoViewHolder(View itemView) {
+        GraphInfoViewHolder(View itemView) {
             super(itemView);
             this.itemView = itemView;
             graphName = itemView.findViewById(R.id.tv_graph_name);
         }
 
-        public void bind(final GraphInfo info) {
+        void bind(final GraphInfo info) {
             graphName.setText(info.name);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
