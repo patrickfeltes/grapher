@@ -19,6 +19,7 @@ public class GraphingActivity extends AuthenticatedActivity {
 
     private Fragment graphingFragment;
     private Fragment equationFragment;
+    private Fragment shareFragment;
 
     // manifest is set to not recreate on orientation change
     @Override
@@ -29,12 +30,14 @@ public class GraphingActivity extends AuthenticatedActivity {
 
         graphingFragment = new GraphingFragment();
         equationFragment = new EquationFragment();
+        shareFragment = new ShareFragment();
 
         // send graph info to the fragments
         Bundle bundle = new Bundle();
         bundle.putString(ExtraKeys.GRAPH_KEY, graphKey);
         graphingFragment.setArguments(bundle);
         equationFragment.setArguments(bundle);
+        shareFragment.setArguments(bundle);
 
         // set the initial fragment
         FragmentManager fm = getSupportFragmentManager();
@@ -65,6 +68,8 @@ public class GraphingActivity extends AuthenticatedActivity {
                 ft.commit();
                 return true;
             case R.id.action_share:
+                ft.replace(R.id.fragment_container, shareFragment);
+                ft.commit();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -72,7 +72,6 @@ public class EquationAdapter extends RecyclerView.Adapter<EquationAdapter.Equati
                         // we should add to database if it's an empty equation
                         String equation = equationField.getText().toString();
                         if (equation.trim().length() == 0) {
-                            Log.d("TAG","hello");
                             equationList.set(getLayoutPosition(), equation);
                             FirebaseRoutes.getGraphEquationsRoute(graphKey).setValue(equationList);
                             return;
