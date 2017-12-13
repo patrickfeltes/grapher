@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.patrickfeltes.graphingprogram.database.objects.Graph;
 import com.patrickfeltes.graphingprogram.database.objects.GraphInfo;
+import com.patrickfeltes.graphingprogram.database.objects.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class FirebaseUtilities {
 
     public static void addUserToDatabase(String UID, String username) {
         DatabaseReference usersTree = FirebaseDatabase.getInstance().getReference("users");
-        usersTree.child(UID).child("username").setValue(username);
+        usersTree.child(UID).setValue(new User(username, UID));
     }
 
     public static void createNewGraph(final String UID, final String graphName, final List<GraphInfo> graphNames, final RecyclerView.Adapter adapter) {

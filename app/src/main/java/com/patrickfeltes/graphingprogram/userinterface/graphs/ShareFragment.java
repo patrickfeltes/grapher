@@ -17,6 +17,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.patrickfeltes.graphingprogram.ExtraKeys;
 import com.patrickfeltes.graphingprogram.R;
 import com.patrickfeltes.graphingprogram.database.objects.User;
 import com.patrickfeltes.graphingprogram.database.objects.UserHolder;
@@ -29,6 +30,8 @@ public class ShareFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.share_layout, container, false);
+
+        final String graphKey = getArguments().getString(ExtraKeys.GRAPH_KEY);
 
         final EditText usernameField = view.findViewById(R.id.et_username_share);
         final RecyclerView rvUsers = view.findViewById(R.id.rv_users);
@@ -59,7 +62,7 @@ public class ShareFragment extends Fragment {
                         View view = LayoutInflater.from(parent.getContext())
                                 .inflate(R.layout.user, parent, false);
 
-                        return new UserHolder(view);
+                        return new UserHolder(view, graphKey);
                     }
 
                     @Override
