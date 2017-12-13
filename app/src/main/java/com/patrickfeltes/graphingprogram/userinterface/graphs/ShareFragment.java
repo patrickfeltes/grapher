@@ -62,7 +62,7 @@ public class ShareFragment extends Fragment {
                         View view = LayoutInflater.from(parent.getContext())
                                 .inflate(R.layout.user, parent, false);
 
-                        return new UserHolder(view, graphKey);
+                        return new UserHolder(view, graphKey, usernameField);
                     }
 
                     @Override
