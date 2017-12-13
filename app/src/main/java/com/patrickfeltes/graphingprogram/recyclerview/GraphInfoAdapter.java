@@ -1,4 +1,4 @@
-package com.patrickfeltes.graphingprogram.userinterface.graph_menu;
+package com.patrickfeltes.graphingprogram.recyclerview;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +24,8 @@ public class GraphInfoAdapter extends RecyclerView.Adapter<GraphInfoAdapter.Grap
 
     @Override
     public GraphInfoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.graph_menu_list_item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(
+                R.layout.graph_menu_list_item, parent, false);
 
         return new GraphInfoViewHolder(itemView);
     }
@@ -58,6 +59,7 @@ public class GraphInfoAdapter extends RecyclerView.Adapter<GraphInfoAdapter.Grap
                 public void onClick(View view) {
                     Intent intent = new Intent(itemView.getContext(), GraphingActivity.class);
                     intent.putExtra(ExtraKeys.GRAPH_KEY, info.id);
+                    intent.putExtra(ExtraKeys.GRAPH_NAME, info.name);
                     itemView.getContext().startActivity(intent);
                 }
             });

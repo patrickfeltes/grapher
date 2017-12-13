@@ -1,7 +1,6 @@
-package com.patrickfeltes.graphingprogram.userinterface.graphs;
+package com.patrickfeltes.graphingprogram.recyclerview;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +8,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.FirebaseDatabase;
 import com.patrickfeltes.graphingprogram.R;
 import com.patrickfeltes.graphingprogram.database.FirebaseRoutes;
 import com.patrickfeltes.graphingprogram.parser.Parser;
 import com.patrickfeltes.graphingprogram.parser.Tokenizer;
 import com.patrickfeltes.graphingprogram.parser.exceptions.InvalidExpressionException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -82,7 +79,8 @@ public class EquationAdapter extends RecyclerView.Adapter<EquationAdapter.Equati
                             equationList.set(getLayoutPosition(), equation);
                             FirebaseRoutes.getGraphEquationsRoute(graphKey).setValue(equationList);
                         } catch(InvalidExpressionException e) {
-                            Toast.makeText(view.getContext(), "Invalid expression.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(view.getContext(), "Invalid expression.",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

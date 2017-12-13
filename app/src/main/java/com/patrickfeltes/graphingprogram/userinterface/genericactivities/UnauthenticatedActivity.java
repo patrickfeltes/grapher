@@ -20,7 +20,8 @@ public abstract class UnauthenticatedActivity extends BaseActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 // don't let logged in users be on unauthenticated pages
                 if (firebaseAuth.getCurrentUser() != null) {
-                    Intent intent = new Intent(UnauthenticatedActivity.this, GraphMenuActivity.class);
+                    Intent intent = new Intent(UnauthenticatedActivity.this,
+                            GraphMenuActivity.class);
                     UnauthenticatedActivity.this.startActivity(intent);
                 }
             }

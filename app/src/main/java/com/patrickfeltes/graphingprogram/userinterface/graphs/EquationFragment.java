@@ -18,6 +18,7 @@ import com.patrickfeltes.graphingprogram.ExtraKeys;
 import com.patrickfeltes.graphingprogram.R;
 import com.patrickfeltes.graphingprogram.database.objects.EquationList;
 import com.patrickfeltes.graphingprogram.database.FirebaseRoutes;
+import com.patrickfeltes.graphingprogram.recyclerview.EquationAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,21 +30,44 @@ public class EquationFragment extends Fragment {
 
     private List<String> equations;
 
+    private String graphKey;
+    private RecyclerView recyclerView;
+    private EquationAdapter adapter;
+
     public EquationFragment() {
         equations = new ArrayList<>();
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.equation_layout, container, false);
         equations = new ArrayList<>();
-        String graphKey = getArguments().getString(ExtraKeys.GRAPH_KEY);
+        graphKey = getArguments().getString(ExtraKeys.GRAPH_KEY);
 
-        final RecyclerView recyclerView = view.findViewById(R.id.rv_equation_list);
+        setUpRecyclerView(view);
+        fillRecyclerView();
+
         Button addEquations = view.findViewById(R.id.b_add_equations);
+        addEquations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.addEquation();
+            }
+        });
 
-        final EquationAdapter adapter = new EquationAdapter(equations, graphKey);
+        return view;
+    }
+
+    /**
+     * Set up recycler view creates the adapter and sets all necessary attributes for the view
+     * @param view The view that RecyclerView belongs to
+     */
+    private void setUpRecyclerView(View view) {
+        recyclerView = view.findViewById(R.id.rv_equation_list);
+
+        adapter = new EquationAdapter(equations, graphKey);
         recyclerView.setAdapter(adapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
@@ -57,11 +81,19 @@ public class EquationFragment extends Fragment {
                 layoutManager.getOrientation()
         );
         recyclerView.addItemDecoration(mDividerItemDecoration);
-        FirebaseRoutes.getGraphRoute(graphKey).addListenerForSingleValueEvent(new ValueEventListener() {
+    }
+
+    /**
+     * Grabs the equations for this graph from Firebase and puts them into the RecyclerView
+     */
+    private void fillRecyclerView() {
+        FirebaseRoutes.getGraphRoute(graphKey).addListenerForSingleValueEvent(
+                new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    List<String> equationsToAdd = dataSnapshot.getValue(EquationList.class).equations;
+                    List<String> equationsToAdd = dataSnapshot.getValue(EquationList.class)
+                            .equations;
                     if (equationsToAdd != null) {
                         equations.addAll(dataSnapshot.getValue(EquationList.class).equations);
                         adapter.notifyDataSetChanged();
@@ -72,14 +104,5 @@ public class EquationFragment extends Fragment {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-
-        addEquations.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adapter.addEquation();
-            }
-        });
-
-        return view;
     }
 }

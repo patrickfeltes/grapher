@@ -13,6 +13,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
 import com.patrickfeltes.graphingprogram.ExtraKeys;
 import com.patrickfeltes.graphingprogram.R;
+import com.patrickfeltes.graphingprogram.asynctasks.GraphViewInfoBundle;
+import com.patrickfeltes.graphingprogram.asynctasks.PlotTask;
 import com.patrickfeltes.graphingprogram.database.objects.EquationList;
 import com.patrickfeltes.graphingprogram.database.FirebaseRoutes;
 
@@ -30,51 +32,67 @@ public class GraphingFragment extends Fragment {
     private final double maxY = 10;
     private final int numberOfPartitions = 500;
 
-    private List<String> equations;
+    private GraphView graphView;
+    private String graphKey;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.graphing_layout, container, false);
 
-        equations = new ArrayList<>();
+        graphView = view.findViewById(R.id.graph);
+        graphKey = getArguments().getString(ExtraKeys.GRAPH_KEY);
 
-        final GraphView graph = view.findViewById(R.id.graph);
+        fillGraph();
 
-        String graphKey = getArguments().getString(ExtraKeys.GRAPH_KEY);
-        FirebaseRoutes.getGraphRoute(graphKey).addListenerForSingleValueEvent(new ValueEventListener() {
+        // set bounds
+        graphView.getViewport().setYAxisBoundsManual(true);
+        graphView.getViewport().setMinY(minY);
+        graphView.getViewport().setMaxY(maxY);
+
+        graphView.getViewport().setXAxisBoundsManual(true);
+        graphView.getViewport().setMinX(minX);
+        graphView.getViewport().setMaxX(maxX);
+
+        // allow zooming and scrolling
+        graphView.getViewport().setScalable(true);
+        graphView.getViewport().setScalableY(true);
+
+        return view;
+    }
+
+    /**
+     * Fills the GraphView with the equations from Firebase
+     */
+    private void fillGraph() {
+        FirebaseRoutes.getGraphRoute(graphKey).addListenerForSingleValueEvent(
+                new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    List<String> equationsToAdd = dataSnapshot.getValue(EquationList.class).equations;
-                    if (equationsToAdd != null) {
-                        equations.addAll(dataSnapshot.getValue(EquationList.class).equations);
-                        for (String equation : equations) {
-                            if (equation.trim().length() != 0) {
-                                new PlotTask(graph).execute(new GraphViewInfoBundle(minX, maxX, numberOfPartitions, equation));
-                            }
-                        }
-                    }
+                    plotEquations(dataSnapshot.getValue(EquationList.class).equations);
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
+    }
 
-        // set bounds
-        graph.getViewport().setYAxisBoundsManual(true);
-        graph.getViewport().setMinY(minY);
-        graph.getViewport().setMaxY(maxY);
-
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMinX(minX);
-        graph.getViewport().setMaxX(maxX);
-
-        // allow zooming and scrolling
-        graph.getViewport().setScalable(true);
-        graph.getViewport().setScalableY(true);
-
-        return view;
+    /**
+     * Takes a list of equations and attempts to plot them
+     * @param equations The equations to plot
+     */
+    private void plotEquations(List<String> equations) {
+        if (equations != null) {
+            for (String equation : equations) {
+                // if equation isn't blank, create a plot task to evaluate it
+                if (equation.trim().length() != 0) {
+                    new PlotTask(graphView).execute(new GraphViewInfoBundle(minX, maxX,
+                            numberOfPartitions, equation));
+                }
+            }
+        }
     }
 }

@@ -55,7 +55,8 @@ public class LoginActivity extends UnauthenticatedActivity implements View.OnCli
                     Toast.makeText(LoginActivity.this, "Successfully Logged In " +
                             getAuth().getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Invalid login credentials", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Invalid login credentials",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });

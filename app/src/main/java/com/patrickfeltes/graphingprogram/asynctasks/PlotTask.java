@@ -1,4 +1,4 @@
-package com.patrickfeltes.graphingprogram.userinterface.graphs;
+package com.patrickfeltes.graphingprogram.asynctasks;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -30,8 +30,14 @@ public class PlotTask extends AsyncTask<GraphViewInfoBundle, Void, LineGraphSeri
         GraphViewInfoBundle graphInformation = graphInformations[0];
         LineGraphSeries<DataPoint> series = null;
         try {
+            // parse equation so that we can evaluate
             Node equation = new Parser(new Tokenizer(graphInformation.getEquation())).parse();
-            double partitionLength = (graphInformation.getMaxX() - graphInformation.getMinX()) / graphInformation.getPartitions();
+
+            // amount to increment by for each data point
+            double partitionLength = (graphInformation.getMaxX() - graphInformation.getMinX())
+                    / graphInformation.getPartitions();
+
+            // evaluate and store value of function at each point
             DataPoint[] points = new DataPoint[graphInformation.getPartitions()];
             HashMap<String, Double> map = new HashMap<>();
             double x = graphInformation.getMinX();
@@ -51,8 +57,11 @@ public class PlotTask extends AsyncTask<GraphViewInfoBundle, Void, LineGraphSeri
     @Override
     protected void onPostExecute(LineGraphSeries<DataPoint> points) {
         super.onPostExecute(points);
+
+        // once the task is over, plot the points
         Random random = new Random();
-        points.setColor(Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
+        points.setColor(Color.rgb(random.nextInt(255), random.nextInt(255),
+                random.nextInt(255)));
         graphView.addSeries(points);
     }
 }

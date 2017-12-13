@@ -1,4 +1,4 @@
-package com.patrickfeltes.graphingprogram.userinterface.graphs;
+package com.patrickfeltes.graphingprogram.asynctasks;
 
 /**
  * GraphViewInfoBundle is used to bundle all necessary information about the graph view to

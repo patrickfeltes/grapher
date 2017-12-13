@@ -18,7 +18,7 @@ import com.patrickfeltes.graphingprogram.userinterface.genericactivities.Unauthe
 /**
  * CreateAccountActivity is where users will create their accounts.
  */
-public class CreateAccountActivity extends UnauthenticatedActivity implements View.OnClickListener{
+public class CreateAccountActivity extends UnauthenticatedActivity implements View.OnClickListener {
 
     private EditText emailField;
     private EditText passwordField;
@@ -44,14 +44,16 @@ public class CreateAccountActivity extends UnauthenticatedActivity implements Vi
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(CreateAccountActivity.this, "Registration Successful.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateAccountActivity.this,
+                            "Registration Successful.", Toast.LENGTH_SHORT).show();
 
                     // when a new user is created, add them to the database
                     String UID = task.getResult().getUser().getUid();
                     String username = emailField.getText().toString();
                     FirebaseUtilities.addUserToDatabase(UID, username);
                 } else {
-                    Toast.makeText(CreateAccountActivity.this, "Invalid username/password combo.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateAccountActivity.this,
+                            "Invalid username/password combo.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

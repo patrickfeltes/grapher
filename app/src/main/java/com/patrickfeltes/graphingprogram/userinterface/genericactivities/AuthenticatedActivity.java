@@ -25,7 +25,8 @@ public abstract class AuthenticatedActivity extends BaseActivity {
 
                 // don't let not logged in users be on authenticated activities
                 if (currentUser == null) {
-                    Intent loginIntent = new Intent(AuthenticatedActivity.this, LoginActivity.class);
+                    Intent loginIntent = new Intent(AuthenticatedActivity.this,
+                            LoginActivity.class);
                     AuthenticatedActivity.this.startActivity(loginIntent);
                 }
             }

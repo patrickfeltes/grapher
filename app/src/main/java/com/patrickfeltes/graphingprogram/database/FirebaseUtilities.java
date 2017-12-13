@@ -20,18 +20,22 @@ import java.util.List;
 public class FirebaseUtilities {
 
     public static void addUserToDatabase(String UID, String username) {
-        DatabaseReference usersTree = FirebaseDatabase.getInstance().getReference("users");
-        usersTree.child(UID).setValue(new User(username, UID));
+        FirebaseRoutes.getUserRoute(UID).setValue(new User(username, UID));
     }
 
-    public static void createNewGraph(final String UID, final String graphName, final List<GraphInfo> graphNames, final RecyclerView.Adapter adapter) {
-        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("graphs").push();
-        ref.setValue(new Graph(new ArrayList<String>(), graphName)).addOnCompleteListener(new OnCompleteListener<Void>() {
+    public static void createNewGraph(final String UID, final String graphName,
+                                      final List<GraphInfo> graphNames,
+                                      final RecyclerView.Adapter adapter) {
+        final DatabaseReference newLocation = FirebaseDatabase.getInstance()
+                .getReference("graphs").push();
+        newLocation.setValue(new Graph(new ArrayList<String>(), graphName))
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                String graphKey = ref.getKey();
+                String graphKey = newLocation.getKey();
                 graphNames.add(new GraphInfo(graphKey, graphName));
-                FirebaseDatabase.getInstance().getReference("graphs-info").child(UID).setValue(graphNames).addOnCompleteListener(new OnCompleteListener<Void>() {
+                FirebaseRoutes.getGraphInfoForUser(UID).setValue(graphNames)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         adapter.notifyDataSetChanged();

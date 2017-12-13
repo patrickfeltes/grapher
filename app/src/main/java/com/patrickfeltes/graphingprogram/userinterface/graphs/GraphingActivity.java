@@ -27,6 +27,7 @@ public class GraphingActivity extends AuthenticatedActivity {
         super.onCreate(savedInstanceState);
 
         String graphKey = (String) getIntent().getExtras().get(ExtraKeys.GRAPH_KEY);
+        String graphName = (String) getIntent().getExtras().get(ExtraKeys.GRAPH_NAME);
 
         graphingFragment = new GraphingFragment();
         equationFragment = new EquationFragment();
@@ -35,6 +36,7 @@ public class GraphingActivity extends AuthenticatedActivity {
         // send graph info to the fragments
         Bundle bundle = new Bundle();
         bundle.putString(ExtraKeys.GRAPH_KEY, graphKey);
+        bundle.putString(ExtraKeys.GRAPH_NAME, graphName);
         graphingFragment.setArguments(bundle);
         equationFragment.setArguments(bundle);
         shareFragment.setArguments(bundle);

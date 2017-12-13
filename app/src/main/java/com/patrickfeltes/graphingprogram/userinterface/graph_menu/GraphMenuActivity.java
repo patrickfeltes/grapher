@@ -21,6 +21,7 @@ import com.patrickfeltes.graphingprogram.R;
 import com.patrickfeltes.graphingprogram.database.FirebaseUtilities;
 import com.patrickfeltes.graphingprogram.database.FirebaseRoutes;
 import com.patrickfeltes.graphingprogram.database.objects.GraphInfo;
+import com.patrickfeltes.graphingprogram.recyclerview.GraphInfoAdapter;
 import com.patrickfeltes.graphingprogram.userinterface.genericactivities.AuthenticatedActivity;
 
 import java.util.ArrayList;
@@ -51,7 +52,8 @@ public class GraphMenuActivity extends AuthenticatedActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), NewGraphActivity.class);
-                ((Activity)(view.getContext())).startActivityForResult(intent, ACTIVITY_RESULT_CODE);
+                ((Activity)(view.getContext())).startActivityForResult(intent,
+                        ACTIVITY_RESULT_CODE);
             }
         });
     }
@@ -66,12 +68,14 @@ public class GraphMenuActivity extends AuthenticatedActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(
+        DividerItemDecoration decoration = new DividerItemDecoration(
                 recyclerView.getContext(), layoutManager.getOrientation());
-        recyclerView.addItemDecoration(mDividerItemDecoration);
+        recyclerView.addItemDecoration(decoration);
 
-        final GenericTypeIndicator<List<GraphInfo>> genericTypeIndicator = new GenericTypeIndicator<List<GraphInfo>>(){};
-        FirebaseRoutes.getGraphInfoForUser(UID).addListenerForSingleValueEvent(new ValueEventListener() {
+        final GenericTypeIndicator<List<GraphInfo>> genericTypeIndicator =
+                new GenericTypeIndicator<List<GraphInfo>>(){};
+        FirebaseRoutes.getGraphInfoForUser(UID).addListenerForSingleValueEvent(
+                new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
