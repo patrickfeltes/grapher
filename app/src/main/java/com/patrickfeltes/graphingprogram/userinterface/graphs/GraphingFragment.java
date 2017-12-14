@@ -66,11 +66,12 @@ public class GraphingFragment extends Fragment {
      * Fills the GraphView with the equations from Firebase
      */
     private void fillGraph() {
-        FirebaseRoutes.getGraphRoute(graphKey).addListenerForSingleValueEvent(
+        FirebaseRoutes.getGraphRoute(graphKey).addValueEventListener(
                 new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    graphView.removeAllSeries();
                     plotEquations(dataSnapshot.getValue(EquationList.class).equations);
                 }
             }
