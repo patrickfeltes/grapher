@@ -5,10 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.patrickfeltes.graphingprogram.ExtraKeys;
 import com.patrickfeltes.graphingprogram.R;
+import com.patrickfeltes.graphingprogram.database.FirebaseRoutes;
 import com.patrickfeltes.graphingprogram.database.objects.GraphInfo;
 import com.patrickfeltes.graphingprogram.userinterface.graphs.GraphingActivity;
 
@@ -44,11 +48,23 @@ public class GraphInfoAdapter extends RecyclerView.Adapter<GraphInfoAdapter.Grap
 
         View itemView;
         TextView graphName;
+        ImageButton removeButton;
 
         GraphInfoViewHolder(View itemView) {
             super(itemView);
             this.itemView = itemView;
             graphName = itemView.findViewById(R.id.tv_graph_name);
+            removeButton = itemView.findViewById(R.id.ib_remove);
+
+            removeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    graphInfoList.remove(getAdapterPosition());
+                    notifyItemRemoved(getAdapterPosition());
+                    FirebaseRoutes.getGraphInfoForUser(FirebaseAuth.getInstance().getUid())
+                            .setValue(graphInfoList);
+                }
+            });
         }
 
         void bind(final GraphInfo info) {

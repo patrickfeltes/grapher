@@ -44,6 +44,9 @@ public class GraphMenuActivity extends AuthenticatedActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_menu);
 
+        graphNames = new ArrayList<>();
+        adapter = new GraphInfoAdapter(graphNames);
+
         setUpRecyclerView();
 
         Button addGraph = findViewById(R.id.b_add_graph);
