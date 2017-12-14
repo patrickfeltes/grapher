@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -41,12 +42,9 @@ public class ShareFragment extends Fragment {
         graphKey = getArguments().getString(ExtraKeys.GRAPH_KEY);
         graphName = getArguments().getString(ExtraKeys.GRAPH_NAME);
 
+        setUpRecyclerView(view, container);
+
         emailField = view.findViewById(R.id.et_username_share);
-
-        rvUsers = view.findViewById(R.id.rv_users);
-        rvUsers.setHasFixedSize(true);
-        rvUsers.setLayoutManager(new LinearLayoutManager(container.getContext()));
-
         emailField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -68,6 +66,22 @@ public class ShareFragment extends Fragment {
         });
 
         return view;
+    }
+
+    /**
+     * Sets up attributes for recycler view
+     */
+    private void setUpRecyclerView(View view, ViewGroup container) {
+        rvUsers = view.findViewById(R.id.rv_users);
+        rvUsers.setHasFixedSize(true);
+        LinearLayoutManager manager = new LinearLayoutManager(container.getContext());
+        rvUsers.setLayoutManager(manager);
+
+        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(
+                rvUsers.getContext(),
+                manager.getOrientation()
+        );
+        rvUsers.addItemDecoration(mDividerItemDecoration);
     }
 
     /**

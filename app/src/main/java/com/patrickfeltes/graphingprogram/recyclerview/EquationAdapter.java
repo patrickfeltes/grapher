@@ -88,7 +88,7 @@ public class EquationAdapter extends RecyclerView.Adapter<EquationAdapter.Equati
         }
 
         void bind(String equation) {
-            equationLabel.setText("y" + (getLayoutPosition() + 1) + "(x)=");
+            equationLabel.setText("y" + (getLayoutPosition() + 1) + "(x) = ");
             equationField.setText(equation);
         }
     }
