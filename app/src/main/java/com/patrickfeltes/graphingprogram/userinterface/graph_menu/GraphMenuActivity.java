@@ -44,7 +44,6 @@ public class GraphMenuActivity extends AuthenticatedActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_menu);
-        graphNames = new ArrayList<>();
 
         setUpRecyclerView();
 
@@ -77,8 +76,14 @@ public class GraphMenuActivity extends AuthenticatedActivity {
         FirebaseRoutes.getGraphInfoForUser(UID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                graphNames = dataSnapshot.getValue(genericTypeIndicator);
-                recyclerView.setAdapter(new GraphInfoAdapter(graphNames));
+                if (dataSnapshot.exists()) {
+                    graphNames = dataSnapshot.getValue(genericTypeIndicator);
+                    if (graphNames == null) {
+                        graphNames = new ArrayList<>();
+                    }
+                    adapter = new GraphInfoAdapter(graphNames);
+                    recyclerView.setAdapter(adapter);
+                }
             }
 
             @Override

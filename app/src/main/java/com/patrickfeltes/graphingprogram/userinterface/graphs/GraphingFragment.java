@@ -18,7 +18,6 @@ import com.patrickfeltes.graphingprogram.asynctasks.PlotTask;
 import com.patrickfeltes.graphingprogram.database.objects.EquationList;
 import com.patrickfeltes.graphingprogram.database.FirebaseRoutes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

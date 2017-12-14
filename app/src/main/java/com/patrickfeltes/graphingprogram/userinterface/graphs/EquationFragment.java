@@ -32,8 +32,7 @@ public class EquationFragment extends Fragment {
     private RecyclerView recyclerView;
     private EquationAdapter adapter;
 
-    public EquationFragment() {
-    }
+    public EquationFragment() {}
 
     @Nullable
     @Override
