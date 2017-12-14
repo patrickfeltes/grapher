@@ -28,14 +28,11 @@ import java.util.List;
  */
 public class EquationFragment extends Fragment {
 
-    private List<String> equations;
-
     private String graphKey;
     private RecyclerView recyclerView;
     private EquationAdapter adapter;
 
     public EquationFragment() {
-        equations = new ArrayList<>();
     }
 
     @Nullable
@@ -43,7 +40,6 @@ public class EquationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.equation_layout, container, false);
-        equations = new ArrayList<>();
         graphKey = getArguments().getString(ExtraKeys.GRAPH_KEY);
 
         setUpRecyclerView(view);
@@ -67,9 +63,6 @@ public class EquationFragment extends Fragment {
     private void setUpRecyclerView(View view) {
         recyclerView = view.findViewById(R.id.rv_equation_list);
 
-        adapter = new EquationAdapter(equations, graphKey);
-        recyclerView.setAdapter(adapter);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
@@ -87,17 +80,18 @@ public class EquationFragment extends Fragment {
      * Grabs the equations for this graph from Firebase and puts them into the RecyclerView
      */
     private void fillRecyclerView() {
-        FirebaseRoutes.getGraphRoute(graphKey).addListenerForSingleValueEvent(
+        FirebaseRoutes.getGraphRoute(graphKey).addValueEventListener(
                 new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    List<String> equationsToAdd = dataSnapshot.getValue(EquationList.class)
+                    List<String> equations = dataSnapshot.getValue(EquationList.class)
                             .equations;
-                    if (equationsToAdd != null) {
-                        equations.addAll(dataSnapshot.getValue(EquationList.class).equations);
-                        adapter.notifyDataSetChanged();
+                    if (equations == null) {
+                        equations = new ArrayList<>();
                     }
+                    adapter = new EquationAdapter(equations, graphKey);
+                    recyclerView.setAdapter(adapter);
                 }
             }
 

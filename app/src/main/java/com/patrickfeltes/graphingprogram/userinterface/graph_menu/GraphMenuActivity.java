@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,10 +60,8 @@ public class GraphMenuActivity extends AuthenticatedActivity {
     }
 
     private void setUpRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.rv_graph_names);
+        final RecyclerView recyclerView = findViewById(R.id.rv_graph_names);
         String UID = getAuth().getUid();
-        adapter = new GraphInfoAdapter(graphNames);
-        recyclerView.setAdapter(adapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -74,14 +73,12 @@ public class GraphMenuActivity extends AuthenticatedActivity {
 
         final GenericTypeIndicator<List<GraphInfo>> genericTypeIndicator =
                 new GenericTypeIndicator<List<GraphInfo>>(){};
-        FirebaseRoutes.getGraphInfoForUser(UID).addListenerForSingleValueEvent(
-                new ValueEventListener() {
+        // set up listener to update the recycler view whenever something changes
+        FirebaseRoutes.getGraphInfoForUser(UID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    graphNames.addAll(dataSnapshot.getValue(genericTypeIndicator));
-                    adapter.notifyDataSetChanged();
-                }
+                graphNames = dataSnapshot.getValue(genericTypeIndicator);
+                recyclerView.setAdapter(new GraphInfoAdapter(graphNames));
             }
 
             @Override

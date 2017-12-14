@@ -1,6 +1,7 @@
 package com.patrickfeltes.graphingprogram.recyclerview;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,27 +63,17 @@ public class EquationAdapter extends RecyclerView.Adapter<EquationAdapter.Equati
             equationLabel = itemView.findViewById(R.id.tv_equation_label);
             equationField = itemView.findViewById(R.id.et_equation_field);
 
-            equationField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View view, boolean hasFocus) {
-                    if (!hasFocus) {
-                        // we should add to database if it's an empty equation
+            // code from:
+            //https://stackoverflow.com/questions/1489852/android-handle-enter-in-an-edittext
+            equationField.setOnKeyListener(new View.OnKeyListener() {
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                            (keyCode == KeyEvent.KEYCODE_ENTER)) {
                         String equation = equationField.getText().toString();
-                        if (equation.trim().length() == 0) {
-                            equationList.set(getLayoutPosition(), equation);
-                            FirebaseRoutes.getGraphEquationsRoute(graphKey).setValue(equationList);
-                            return;
-                        }
-                        try {
-                            // will throw exception if the expression is invalid
-                            new Parser(new Tokenizer(equationField.getText().toString())).parse();
-                            equationList.set(getLayoutPosition(), equation);
-                            FirebaseRoutes.getGraphEquationsRoute(graphKey).setValue(equationList);
-                        } catch(InvalidExpressionException e) {
-                            Toast.makeText(view.getContext(), "Invalid expression.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                        updateEquations(equation);
+                        return true;
                     }
+                    return false;
                 }
             });
         }
@@ -90,6 +81,27 @@ public class EquationAdapter extends RecyclerView.Adapter<EquationAdapter.Equati
         void bind(String equation) {
             equationLabel.setText("y" + (getLayoutPosition() + 1) + "(x) = ");
             equationField.setText(equation);
+        }
+
+        /**
+         * Given an equation, update the value at its position
+         * @param equation the equation to use to update
+         */
+        void updateEquations(String equation) {
+            if (equation.trim().length() == 0) {
+                equationList.set(getLayoutPosition(), equation);
+                FirebaseRoutes.getGraphEquationsRoute(graphKey).setValue(equationList);
+            } else {
+                try {
+                    // will throw exception if the expression is invalid
+                    new Parser(new Tokenizer(equationField.getText().toString())).parse();
+                    equationList.set(getLayoutPosition(), equation);
+                    FirebaseRoutes.getGraphEquationsRoute(graphKey).setValue(equationList);
+                } catch(InvalidExpressionException e) {
+                    Toast.makeText(equationField.getContext(), "Invalid expression.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     }
 }
