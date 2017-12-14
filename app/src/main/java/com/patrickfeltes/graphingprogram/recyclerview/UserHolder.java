@@ -73,21 +73,38 @@ public class UserHolder extends RecyclerView.ViewHolder {
                     }
 
                     // add this graph to the user and push it to the database
-                    graphs.add(new GraphInfo(graphKey, graphName));
-                    FirebaseRoutes.getGraphInfoForUser(uid).setValue(graphs).addOnCompleteListener(
-                            new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(context, graphName + " successfully shared.",
-                                    Toast.LENGTH_SHORT).show();
-                            input.setText("");
-                        }
-                    });
+                    if (!alreadyHasGraph(graphs, graphKey)) {
+                        graphs.add(new GraphInfo(graphKey, graphName));
+                        FirebaseRoutes.getGraphInfoForUser(uid).setValue(graphs).
+                                addOnCompleteListener(
+                                new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(context, graphName +
+                                                        " successfully shared.",
+                                                Toast.LENGTH_SHORT).show();
+                                        input.setText("");
+                                    }
+                                });
+                    } else {
+                        Toast.makeText(context, graphName + " is already shared with that user.",
+                                Toast.LENGTH_SHORT).show();
+                        input.setText("");
+                    }
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {}
             });
         }
+    }
+
+    private boolean alreadyHasGraph(List<GraphInfo> graphs, String graphKey) {
+        for (GraphInfo info : graphs) {
+            if (info.id.equals(graphKey)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
