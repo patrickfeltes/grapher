@@ -5,7 +5,9 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,12 +58,14 @@ public class EquationAdapter extends RecyclerView.Adapter<EquationAdapter.Equati
 
         TextView equationLabel;
         EditText equationField;
+        ImageButton removeButton;
 
         public EquationViewHolder(View itemView) {
             super(itemView);
 
             equationLabel = itemView.findViewById(R.id.tv_equation_label);
             equationField = itemView.findViewById(R.id.et_equation_field);
+            removeButton = itemView.findViewById(R.id.ib_remove);
 
             // code from:
             //https://stackoverflow.com/questions/1489852/android-handle-enter-in-an-edittext
@@ -74,6 +78,16 @@ public class EquationAdapter extends RecyclerView.Adapter<EquationAdapter.Equati
                         return true;
                     }
                     return false;
+                }
+            });
+
+            // remove equations from the list
+            removeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    equationList.remove(getAdapterPosition());
+                    notifyItemRemoved(getAdapterPosition());
+                    FirebaseRoutes.getGraphEquationsRoute(graphKey).setValue(equationList);
                 }
             });
         }
